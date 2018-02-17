@@ -1,4 +1,4 @@
-import java.util.Random;
+import java.util.ArrayList;
 /**
  * @SER516 ProjecTwo_Team10
  * @author huichuan wu
@@ -12,18 +12,20 @@ public class generateAverageValue {
      * @param value the value get from the server
      */
     public int getAverage(int value){
-        int res = (sum + value)/values.size().
-        return res;
+        values.add(value);
+        sum += value;
+        long res = sum /values.size();
+        return (int)res;
     }
     /**
      * @param valueList  a list of values get from server
      */
     public int getAverage(ArrayList<Integer> valueList){
-        int sum1 = 0;
         for(int v : valueList){
-            sum1 += v;
+            sum += v;
+            values.add(v);
         }
-        int res = (sum + sum1)/values.size().
-        return res;
+        long res = sum/values.size();
+        return (int)res;
     }
 }
