@@ -20,10 +20,7 @@ public class GenerateRandomNumbers {
 		 this.Channel = channel;
 	}
 	public  void RandomNumberFunction() {
-		  
 		    	ArrayList<Integer> al = new ArrayList<Integer>();
-		    
-        		
         		for(int i = 0; i < Channel;i++)
         		{
         		int randomNumber = random.nextInt(highestNumberPossible - lowestNumberPossible) + lowestNumberPossible;
@@ -31,5 +28,4 @@ public class GenerateRandomNumbers {
         		}
         		System.out.print(al);   
 			}
-
 }
