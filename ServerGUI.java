@@ -33,6 +33,8 @@ public class ServerGUI {
 
 	private JFrame frmServer;
 	private JTextField textField;
+	static JTextPane textPane = new JTextPane();
+	static JTextPane textPane_1 = new JTextPane();
 
 	/**
 	 * Launch the application.
@@ -108,14 +110,12 @@ public class ServerGUI {
 		lblfrequencyhz.setBackground(new Color(173, 216, 230));
 		lblfrequencyhz.setOpaque(true);
 		
-		JTextPane textPane = new JTextPane();
 		textPane.setBounds(490, 13, 126, 61);
 		panel.add(textPane);
 		textPane.setBackground(new Color(255, 204, 204));
 		textPane.setFont(new Font("Courier New", Font.PLAIN, 18));
 		textPane.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		JTextPane textPane_1 = new JTextPane();
 		textPane_1.setBounds(490, 87, 126, 61);
 		panel.add(textPane_1);
 		textPane_1.setBackground(new Color(173, 216, 230));
