@@ -26,6 +26,6 @@ public class GenerateRandomNumbers {
         		int randomNumber = random.nextInt(highestNumberPossible - lowestNumberPossible) + lowestNumberPossible;
         		al.add(randomNumber);
         		}
-        		System.out.print(al);   
+        		return al;  
 			}
 }
