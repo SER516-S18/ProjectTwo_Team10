@@ -1,6 +1,13 @@
 
 import java.awt.EventQueue;
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,9 +18,11 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Panel;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 
-public class ClientWindow extends JFrame {
+public class ClientWindow extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -131,8 +140,11 @@ public class ClientWindow extends JFrame {
 		JLabel label_2 = new JLabel("");
 		label_2.setFont(new Font("Courier New", Font.PLAIN, 16));
 		panel_8.add(label_2);
-		
-		JComboBox<Integer> comboBox = new JComboBox<Integer>();
+	
+        String[] noChannels = {"1", "2", "3", "4", "5"};    
+		JComboBox comboBox = new JComboBox(noChannels);
+        setNoOfChannels(1);
+		comboBox.addActionListener(this);
 		comboBox.setFont(new Font("Courier New", Font.PLAIN, 16));
 		comboBox.setBackground(SystemColor.activeCaption);
 		comboBox.setBounds(618, 190, 103, 26);
@@ -158,5 +170,54 @@ public class ClientWindow extends JFrame {
 		txtpnConsole.setText("Console:");
 		txtpnConsole.setBounds(15, 388, 748, 90);
 		contentPane.add(txtpnConsole);
+
+        startClient();
 	}
+	
+	/**
+	 * Action listner for drop down menu
+	 */
+	public void actionPerformed(ActionEvent e) {
+        JComboBox cb = (JComboBox)e.getSource();
+        Integer no = Integer.parseInt((String)cb.getSelectedItem());
+        setNoOfChannels(no);
+    }
+
+
+    public static void startClient() {
+        (new Thread() {
+            @Override
+            public void run() {
+                try {
+                   Socket socket = new Socket("localhost", 60010);
+                   BufferedWriter out = new BufferedWriter(
+                                            new OutputStreamWriter(socket.getOutputStream()));
+                   BufferedReader in = new BufferedReader(
+                                            new InputStreamReader(socket.getInputStream())); 
+                   while (true) {
+                       String s = getNoOfChannels().toString();
+                       out.write(s);
+                       out.newLine();
+                       out.flush();
+                       System.out.println(in.readLine());
+                       Thread.sleep(200);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    synchronized static Integer getNoOfChannels() {
+        return noOfChannels;
+    }
+
+    synchronized static void setNoOfChannels(Integer x) {
+        noOfChannels = x;
+    }
+ 
+    private static Integer noOfChannels;
 }

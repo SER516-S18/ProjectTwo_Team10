@@ -3,7 +3,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -138,5 +145,38 @@ public class ServerGUI {
 		txtpnConsole.setBounds(12, 390, 628, 138);
 		txtpnConsole.setBorder(BorderFactory.createLineBorder(Color.black));
 		frmServer.getContentPane().add(txtpnConsole);
+
+		startServer();
 	}
+
+    public static void startServer() {
+        (new Thread() {
+            @Override
+            public void run() {
+              try {
+                ServerSocket serverSocket = new ServerSocket(60010);
+                while (true) {
+                        Socket clientSocket = serverSocket.accept();
+                        BufferedWriter out = new BufferedWriter(
+                            new OutputStreamWriter(clientSocket.getOutputStream()));
+                        BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
+                        while (true) {
+                            System.out.println(in.readLine());
+                            out.write("Hello World!");
+                            out.newLine();
+                            out.flush();
+                            Thread.sleep(200);
+                        }
+                 }
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            
+            }
+        }).start();
+    }
 }
