@@ -1,8 +1,5 @@
 /**
  * Class about highest and lowest value on the client side.
- * 
- * Since Client GUI does not start working. I will just upload
- * this POJO temporarily. It may be updated in future.
  */
 
 public class ClientHightestAndLowestVal {
