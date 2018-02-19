@@ -129,6 +129,20 @@ public class ServerGUI {
 		textPane_3.setFont(new Font("Courier New", Font.PLAIN, 18));
 		textPane_3.setBorder(BorderFactory.createLineBorder(Color.black));
 		
+		//Calling the indicator
+		Indicator ledIndicator = new Indicator(1);
+		ledIndicator.setBorder(BorderFactory.createLineBorder(Color.black));
+		ledIndicator.setBounds(22,13,311,296);
+		textPane_3.add(ledIndicator);
+		ledIndicator.update(1);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		ledIndicator.update(0);
+		//End of indicator code
+		
 		textField = new JTextField();
 		textField.setBounds(490, 161, 126, 61);
 		panel.add(textField);
