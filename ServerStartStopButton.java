@@ -8,7 +8,7 @@ import java.net.Socket;
  */
 
 
-public class startStopButton {
+public class ServerStartStopButton {
     
     Socket serverSocket = null;
     
