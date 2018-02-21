@@ -9,8 +9,10 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -22,6 +24,7 @@ public class PlotDiagram extends JPanel {
   private static final int BORDER_GAP = 30;
   private static final Color GRAPH_COLOR = Color.green;
   private static final Color GRAPH_POINT_COLOR = new Color(150, 50, 50, 180);
+  private static final List<Color> LINE_COLOR_ARRAY = Arrays.asList(Color.green, Color.red, Color.blue);
   private static final Stroke GRAPH_STROKE = new BasicStroke(3f);
   private static final int GRAPH_POINT_WIDTH = 12;
   private static final int Y_HATCH_CNT = 10;
@@ -71,7 +74,7 @@ public class PlotDiagram extends JPanel {
       }
 
       Stroke oldStroke = g2.getStroke();
-      g2.setColor(GRAPH_COLOR);
+      g2.setColor(LINE_COLOR_ARRAY.get(j));
       g2.setStroke(GRAPH_STROKE);
       for (int i = 0; i < graphPoints.size() - 1; i++) {
          int x1 = graphPoints.get(i).x;
