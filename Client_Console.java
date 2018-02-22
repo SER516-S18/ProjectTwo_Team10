@@ -8,34 +8,46 @@ import java.awt.Dimension;
 * @version 0.9
 * @since   02/17/2018
 */
-public class console extends JPanel{
+public class Client_Console extends JPanel{
     
-    
-    Font f = new Font("Serif", Font.BOLD, 15);
+    static JTextPane console =  ClientWindow.getTextPane();
+	private final static Logger printing = Logger.getLogger(ClientWindow.class.getName());
+
+	public static void setErrorMessage(String error) {
+		try {
+			console.setContentType( "text/html" );
+			HTMLDocument doc=(HTMLDocument) console.getStyledDocument();
+            		doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:red\">" + new Date() + " " + error + "</span> <br>");
+		} catch (Exception ex) {
+			printing.log(Level.SEVERE, "Error adding message to console", ex);
+		}
+	}
+	
+	public static void setMessage(String message) {
+		try {
+			console.setContentType( "text/html" );
+			HTMLDocument doc=(HTMLDocument) console.getStyledDocument();
+			doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:black\">" + new Date() + " " + message + "</span> <br>");
+		} catch (Exception ex) {
+			printing.log(Level.SEVERE, "Error adding message to console", ex);
+		}
+	}
     
     /**
-    * Constructor.
-    */
+    Font f = new Font("Serif", Font.BOLD, 15);
+    
     public console (){
         
         getpanel();
         
     }
     
-    /**
-    * Set panel's property.
-    * background is white.
-    */
     public void getpanel (){
         setSize(new Dimension(500,100));
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS)); 
         setBackground(Color.WHITE); 
     }
     
-    /**
-    * Set Label
-    * Add Label
-    */
     public void getstart(){
         JLabel start = new JLabel("start button is clicked"); 
         start.setFont(f); 
@@ -78,9 +90,6 @@ public class console extends JPanel{
         add(Frequency);
     }
     
-    /**
-    * Main method
-    * To test panel
     public static void main(String[] args){
         JFrame f=new JFrame();
         f.setSize(200,200);    
@@ -90,9 +99,5 @@ public class console extends JPanel{
         f.add(p);
     }
     **/
-    
-    
-    
-    
     
 }
