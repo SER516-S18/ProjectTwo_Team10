@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class generateAverageValue {
     ArrayList<Integer> valueList = new ArrayList<Integer>();
-    public int getAverage(){
+    public int calculateAverage(){
         long sum = 0;
         for(int v : valueList){
             sum += v;
