@@ -1,13 +1,15 @@
 import java.util.List;
 
 /**
- * Class about highest and lowest value on the client side.
- */
+  * @SER516 ProjecTwo_Team10
+  * @author Zitong Wei
+  * @Version 1.0
+  * User Story #10: Get highest and lowest val.
+  */
 
-public class ClientValCalculator {
+public class ClientHighestAndLowestVal.java {
     private static int highestVal;
     private static int lowestVal;
-    private static int averageVal;
 
     static {
         highestVal = 0;
@@ -15,21 +17,17 @@ public class ClientValCalculator {
         averageVal = 0;
     }
 
-    private ClientValCalculator() {}
+    private ClientHighestAndLowestVal.java() {}
 
     /**
-      * Read an integer list and update the highest, lowest and average value
+      * Read an integer list and update the highest, lowest value.
       * @param list
       */
     public static void readList(List<Integer> list) {
-        long sum = 0;
         for (int i : list) {
             highestVal = i > highestVal ? i : highestVal;
             lowestVal = i < lowestVal ? i : lowestVal;
-            sum += i;
         }
-
-        averageVal = (int) (sum / list.size());
     }
 
     /**
@@ -44,12 +42,5 @@ public class ClientValCalculator {
      */
     public static int getLowestVal() {
         return lowestVal;
-    }
-
-    /**
-     * @return the averageVal
-     */
-    public static int getAverageVal() {
-        return averageVal;
     }
 }
