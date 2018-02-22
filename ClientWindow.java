@@ -1,5 +1,3 @@
-package plotdiagram;
-
 import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,24 +7,18 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
-
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Panel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JTextPane;
 
 public class ClientWindow extends JFrame implements ActionListener {
@@ -35,7 +27,9 @@ public class ClientWindow extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	//private JPanel contentPane;
+	private JFrame frame;
+	private static int flag = 0;
 
 	/**
 	 * Launch the application.
@@ -44,8 +38,8 @@ public class ClientWindow extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ClientWindow frame = new ClientWindow();
-					frame.setVisible(true);
+					ClientWindow window = new ClientWindow();
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -57,27 +51,37 @@ public class ClientWindow extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public ClientWindow() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		/*setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 550);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(null);*/
+		
+		frame = new JFrame();
+		frame.setTitle("Client");
+		frame.setBounds(100, 100, 800, 550);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
 		JButton btnStartstop = new JButton("Start/Stop");
 		btnStartstop.setBackground(new Color(255, 182, 193));
 		btnStartstop.setFont(new Font("Courier New", Font.PLAIN, 16));
 		btnStartstop.setBounds(604, 16, 159, 29);
-		contentPane.add(btnStartstop);
+		frame.getContentPane().add(btnStartstop);
+		if(btnStartstop.isEnabled())
+			flag = 1;
+		else 
+			flag = 0;
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(SystemColor.controlHighlight);
+		panel.setBackground(new Color(220, 220, 220));
 		panel.setBounds(15, 58, 748, 300);
-		contentPane.add(panel);
+		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(SystemColor.activeCaption);
+		panel_1.setBackground(new Color(173, 216, 230));
 		panel_1.setBounds(433, 16, 157, 38);
 		panel.add(panel_1);
 		
@@ -95,7 +99,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		panel_2.add(lblLowestValue);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(SystemColor.activeCaption);
+		panel_3.setBackground(new Color(173, 216, 230));
 		panel_3.setBounds(433, 124, 157, 38);
 		panel.add(panel_3);
 		
@@ -113,7 +117,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		panel_4.add(lblChannels);
 		
 		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(SystemColor.activeCaption);
+		panel_5.setBackground(new Color(173, 216, 230));
 		panel_5.setBounds(433, 232, 157, 41);
 		panel.add(panel_5);
 		
@@ -131,7 +135,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		panel_6.add(lblA);
 		
 		JPanel panel_7 = new JPanel();
-		panel_7.setBackground(SystemColor.activeCaption);
+		panel_7.setBackground(new Color(173, 216, 230));
 		panel_7.setBounds(618, 70, 103, 38);
 		panel.add(panel_7);
 		
@@ -153,7 +157,7 @@ public class ClientWindow extends JFrame implements ActionListener {
         setNoOfChannels(1);
 		comboBox.addActionListener(this);
 		comboBox.setFont(new Font("Courier New", Font.PLAIN, 16));
-		comboBox.setBackground(SystemColor.activeCaption);
+		comboBox.setBackground(new Color(173, 216, 230));
 		comboBox.setBounds(618, 190, 103, 26);
 		panel.add(comboBox);
 		
@@ -166,31 +170,17 @@ public class ClientWindow extends JFrame implements ActionListener {
 		label_3.setFont(new Font("Courier New", Font.PLAIN, 16));
 		panel_9.add(label_3);
 		
-		//Panel panel_10 = new Panel();
-		//random list for test
-		List<List<Integer>> values = new ArrayList<List<Integer>>();
-	      Random random = new Random();
-	      int maxDataPoints = 16;
-	      int maxScore = 20;
-	      for (int j=0; j<3; j++){
-	    	List<Integer> temp = new ArrayList<Integer>();
-	    	values.add(temp);  
-	        for (int i = 0; i < maxDataPoints ; i++) {
-	          values.get(j).add(random.nextInt(maxScore));
-	        }
-	        System.out.println(values);
-	      }
-		PlotDiagram panel_10 = new PlotDiagram(values);
+		Panel panel_10 = new Panel();
 		panel_10.setBackground(new Color(255, 182, 193));
 		panel_10.setBounds(10, 16, 406, 257);
 		panel.add(panel_10);
 		
 		JTextPane txtpnConsole = new JTextPane();
 		txtpnConsole.setFont(new Font("Courier New", Font.PLAIN, 16));
-		txtpnConsole.setBackground(SystemColor.controlHighlight);
+		txtpnConsole.setBackground(new Color(173, 216, 230));
 		txtpnConsole.setText("Console:");
 		txtpnConsole.setBounds(15, 388, 748, 90);
-		contentPane.add(txtpnConsole);
+		frame.getContentPane().add(txtpnConsole);
 
         startClient();
 	}
@@ -222,6 +212,9 @@ public class ClientWindow extends JFrame implements ActionListener {
                        out.flush();
                        System.out.println(in.readLine());
                        Thread.sleep(200);
+                       if(flag == 0)
+                    		   socket.close();
+                    		   
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
