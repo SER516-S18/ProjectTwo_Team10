@@ -175,7 +175,7 @@ public class ServerGUI {
 		JScrollPane consoleScroll = new JScrollPane(txtpnConsole);
 		JTextPane consolePane = new JTextPane();
 		
-		consolePanel.setFont(new Font("Courier New", Font.PLAIN, 18));
+		consolePane.setFont(new Font("Courier New", Font.PLAIN, 18));
 		consolePane.setText(" Console: ");
 		consolePane.setOpaque(false);
 		consolePane.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
