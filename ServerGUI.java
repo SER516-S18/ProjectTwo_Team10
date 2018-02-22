@@ -7,10 +7,13 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -35,6 +38,7 @@ public class ServerGUI {
 	private JTextField textField;
 	static JTextPane textPane = new JTextPane();
 	static JTextPane textPane_1 = new JTextPane();
+	private static ServerSocket serverSocket;
 
 	/**
 	 * Launch the application.
@@ -115,12 +119,14 @@ public class ServerGUI {
 		textPane.setBackground(new Color(255, 204, 204));
 		textPane.setFont(new Font("Courier New", Font.PLAIN, 18));
 		textPane.setBorder(BorderFactory.createLineBorder(Color.black));
+		textPane.setEditable(false);
 		
 		textPane_1.setBounds(490, 87, 126, 61);
 		panel.add(textPane_1);
 		textPane_1.setBackground(new Color(173, 216, 230));
 		textPane_1.setFont(new Font("Courier New", Font.PLAIN, 18));
 		textPane_1.setBorder(BorderFactory.createLineBorder(Color.black));
+		textPane_1.setEditable(false);
 		
 		JTextPane textPane_3 = new JTextPane();
 		textPane_3.setBounds(22, 13, 311, 296);
@@ -128,6 +134,7 @@ public class ServerGUI {
 		textPane_3.setBackground(new Color(255, 204, 204));
 		textPane_3.setFont(new Font("Courier New", Font.PLAIN, 18));
 		textPane_3.setBorder(BorderFactory.createLineBorder(Color.black));
+		textPane_3.setEditable(false);
 		
 		//Calling the indicator
 		Indicator ledIndicator = new Indicator(1);
@@ -146,51 +153,56 @@ public class ServerGUI {
 		textField = new JTextField();
 		textField.setBounds(490, 161, 126, 61);
 		panel.add(textField);
+		textField.setEditable(false);
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setFont(new Font("Courier New", Font.PLAIN, 18));
+		//textField.setFont(new Font("Courier New", Font.PLAIN, 18));
 		textField.setBackground(new Color(255, 204, 204));
 		textField.setBorder(BorderFactory.createLineBorder(Color.black));
-		textField.setColumns(10);
+		//textField.setColumns(10);
 		
 		JTextPane txtpnConsole = new JTextPane();
 		txtpnConsole.setText("Console:");
+		txtpnConsole.setEditable(false);
 		txtpnConsole.setFont(new Font("Courier New", Font.PLAIN, 18));
 		txtpnConsole.setBackground(new Color(211, 211, 211));
 		txtpnConsole.setBounds(12, 390, 628, 138);
 		txtpnConsole.setBorder(BorderFactory.createLineBorder(Color.black));
 		frmServer.getContentPane().add(txtpnConsole);
 
-		startServer();
+		try {
+			startServer();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-    public static void startServer() {
-        (new Thread() {
-            @Override
-            public void run() {
-              try {
-                ServerSocket serverSocket = new ServerSocket(60010);
-                while (true) {
-                        Socket clientSocket = serverSocket.accept();
-                        BufferedWriter out = new BufferedWriter(
-                            new OutputStreamWriter(clientSocket.getOutputStream()));
-                        BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
-                        while (true) {
-                            System.out.println(in.readLine());
-                            out.write("Hello World!");
-                            out.newLine();
-                            out.flush();
-                            Thread.sleep(200);
-                        }
-                 }
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            
-            }
-        }).start();
+    public static void startServer() throws IOException {
+    	serverSocket = new ServerSocket(60010);
+    	 Socket clientSocket = serverSocket.accept();
+    
+    	ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
+    	BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
+    	 String channel = in.readLine();
+    	 String frequency = in.readLine();
+    	int low = 0;
+    	int high = 1000;
+    	GenerateRandomNumbers grn = new GenerateRandomNumbers(high, low,  Integer.parseInt(channel));
+    	new Thread() {
+    	    public void run() {
+    	        while(true) {
+    	        		
+    	          ArrayList<Integer> arrayList = grn.RandomNumberFunction();
+    	            try {
+					objectOutput.writeObject(arrayList);
+    	                Thread.sleep(1000/Integer.parseInt(frequency));
+    	                arrayList.clear();
+    	            } catch(Exception e) {
+    	            	e.printStackTrace();
+    	            	//add to console in case of any exception
+    	            }
+    	        }
+    	    }
+    	}.start();    
     }
 }
