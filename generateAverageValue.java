@@ -13,7 +13,7 @@ public class generateAverageValue {
         for(int v : valueList){
             sum += v;
         }
-        long res = sum/valueList.size();
-        return (int)res;
+        long average = sum/valueList.size();
+        return (int)average;
     }
 }
