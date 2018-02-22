@@ -11,7 +11,7 @@ public class ServerConsole {
 			HTMLDocument doc=(HTMLDocument) console.getDocument();
             doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:red\">" + "[ " + new Date() + " ] " + error + "</span> <br>");
 		} catch (Exception e) {
-			console.setText("Error printing to Console");
+			e.printStackTrace();
 		}
 	}
 	
@@ -21,7 +21,7 @@ public class ServerConsole {
 			HTMLDocument doc=(HTMLDocument) console.getDocument();
 			doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:black\">" + "[ " + new Date() + " ] " + message + "</span> <br>");
 		} catch (Exception e) {
-			console.setText("Error printing to Console");
+			e.printStackTrace();
 		}
 	}
 }
