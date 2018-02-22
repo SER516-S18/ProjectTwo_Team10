@@ -9,7 +9,7 @@ public class ServerConsole {
 		try {
 			console.setContentType( "text/html" );
 			HTMLDocument doc=(HTMLDocument) console.getDocument();
-            doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:red\">" + "[ " + new Date() + " ] " + error + "</span> <br>");
+            doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"[ " + new Date() +  " ] " + "<span style=\"color:red\">"  + error + "</span> <br>");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -19,7 +19,7 @@ public class ServerConsole {
 		try {
 			console.setContentType( "text/html" );
 			HTMLDocument doc=(HTMLDocument) console.getDocument();
-			doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:black\">" + "[ " + new Date() + " ] " + message + "</span> <br>");
+			doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()), "[ " +  new Date() + " ] " + "<span style=\"color:black\">"  + message + "</span> <br>");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
