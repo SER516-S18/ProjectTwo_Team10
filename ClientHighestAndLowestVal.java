@@ -13,8 +13,15 @@ public class ClientHighestAndLowestVal {
         lowestVal = 0;
     }
 
+    /**
+      * Pure static class
+      */
     private ClientHighestAndLowestVal() {}
 
+    /**
+      * Read an integer list and update the highest and lowest value
+      * @param List<Integer>
+      */
     public static void readList(List<Integer> list) {
         for (int i : list) {
             highestVal = i > highestVal ? i : highestVal;
