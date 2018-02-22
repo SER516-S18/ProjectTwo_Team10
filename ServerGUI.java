@@ -35,10 +35,13 @@ import javax.swing.border.LineBorder;
 public class ServerGUI {
 
 	private JFrame frmServer;
-	private JTextField textField;
+	//private JTextField textField;
 	static JTextPane textPane = new JTextPane();
 	static JTextPane textPane_1 = new JTextPane();
 	private static ServerSocket serverSocket;
+	static JTextPane txtpnConsole = new JTextPane();
+	static JTextPane textPane_3 = new JTextPane();
+	static JTextField textField = new JTextField();
 
 	/**
 	 * Launch the application.
@@ -119,16 +122,16 @@ public class ServerGUI {
 		textPane.setBackground(new Color(255, 204, 204));
 		textPane.setFont(new Font("Courier New", Font.PLAIN, 18));
 		textPane.setBorder(BorderFactory.createLineBorder(Color.black));
-		textPane.setEditable(false);
+		//textPane.setEditable(false);
 		
 		textPane_1.setBounds(490, 87, 126, 61);
 		panel.add(textPane_1);
 		textPane_1.setBackground(new Color(173, 216, 230));
 		textPane_1.setFont(new Font("Courier New", Font.PLAIN, 18));
 		textPane_1.setBorder(BorderFactory.createLineBorder(Color.black));
-		textPane_1.setEditable(false);
+		//textPane_1.setEditable(false);
 		
-		JTextPane textPane_3 = new JTextPane();
+		
 		textPane_3.setBounds(22, 13, 311, 296);
 		panel.add(textPane_3);
 		textPane_3.setBackground(new Color(255, 204, 204));
@@ -150,17 +153,17 @@ public class ServerGUI {
 		ledIndicator.update(0);
 		//End of indicator code
 		
-		textField = new JTextField();
+		
 		textField.setBounds(490, 161, 126, 61);
 		panel.add(textField);
-		textField.setEditable(false);
+		//textField.setEditable(false);
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
 		//textField.setFont(new Font("Courier New", Font.PLAIN, 18));
 		textField.setBackground(new Color(255, 204, 204));
 		textField.setBorder(BorderFactory.createLineBorder(Color.black));
 		//textField.setColumns(10);
 		
-		JTextPane txtpnConsole = new JTextPane();
+		
 		txtpnConsole.setText("Console:");
 		txtpnConsole.setEditable(false);
 		txtpnConsole.setFont(new Font("Courier New", Font.PLAIN, 18));
@@ -168,6 +171,7 @@ public class ServerGUI {
 		txtpnConsole.setBounds(12, 390, 628, 138);
 		txtpnConsole.setBorder(BorderFactory.createLineBorder(Color.black));
 		frmServer.getContentPane().add(txtpnConsole);
+		ServerConsole.setErrorMessage("Hello");
 
 		try {
 			startServer();
@@ -176,26 +180,32 @@ public class ServerGUI {
 			e.printStackTrace();
 		}
 	}
+		public static JTextPane getTextPane() {
+			return txtpnConsole;
+		}
+
 
     public static void startServer() throws IOException {
-    	serverSocket = new ServerSocket(60010);
+    	serverSocket = new ServerSocket(1516);
     	 Socket clientSocket = serverSocket.accept();
     
     	ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
     	BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
     	 String channel = in.readLine();
-    	 String frequency = in.readLine();
-    	int low = 0;
-    	int high = 1000;
+    	 int frequency = ServerHLValues.getFrequency();
+    	int low = ServerHLValues.getLowestVal();
+    	int high = ServerHLValues.getHighestVal();;
     	GenerateRandomNumbers grn = new GenerateRandomNumbers(high, low,  Integer.parseInt(channel));
+    	
     	new Thread() {
     	    public void run() {
     	        while(true) {
     	        		
     	          ArrayList<Integer> arrayList = grn.RandomNumberFunction();
+    	          
     	            try {
 					objectOutput.writeObject(arrayList);
-    	                Thread.sleep(1000/Integer.parseInt(frequency));
+    	                Thread.sleep(1000/frequency);
     	                arrayList.clear();
     	            } catch(Exception e) {
     	            	e.printStackTrace();
