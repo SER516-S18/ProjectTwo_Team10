@@ -8,9 +8,6 @@ import java.util.ArrayList;
 
 public class generateAverageValue {
     ArrayList<Integer> valueList = new ArrayList<Integer>();
-    /**
-     * @param valueList  a list of values get from server
-     */
     public int getAverage(){
         long sum = 0;
         for(int v : valueList){
