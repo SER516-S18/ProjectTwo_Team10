@@ -6,21 +6,11 @@ import java.util.ArrayList;
  * User Story #12: average value in the client side
  */
 public class generateAverageValue {
-    ArrayList<Integer> values = new ArrayList<>();
-    long sum = 0;
-    /**
-     * @param value the value get from the server
-     */
-    public int getAverage(int value){
-        values.add(value);
-        sum += value;
-        long res = sum /values.size();
-        return (int)res;
-    }
     /**
      * @param valueList  a list of values get from server
      */
     public int getAverage(ArrayList<Integer> valueList){
+        long sum = 0;
         for(int v : valueList){
             sum += v;
             values.add(v);
