@@ -34,6 +34,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 	//private JPanel contentPane;
 	private JFrame frame;
 	private static int flag = 0;
+	static JTextPane txtpnConsole = new JTextPane();
 
 	/**
 	 * Launch the application.
@@ -179,7 +180,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		panel_10.setBounds(10, 16, 406, 257);
 		panel.add(panel_10);
 		
-		JTextPane txtpnConsole = new JTextPane();
+		
 		txtpnConsole.setFont(new Font("Courier New", Font.PLAIN, 16));
 		txtpnConsole.setBackground(new Color(173, 216, 230));
 		txtpnConsole.setText("Console:");
@@ -188,6 +189,10 @@ public class ClientWindow extends JFrame implements ActionListener {
 
         startClient();
 	}
+	
+     public static JTextPane getTextPane() {
+			return txtpnConsole;
+     }
 	
 	/**
 	 * Action listner for drop down menu
