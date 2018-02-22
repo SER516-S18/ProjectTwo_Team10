@@ -44,6 +44,7 @@ public class ClientHighestAndLowestVal {
     }
     /**
      * @return the average value
+     * @param the value list in the client
      */
     public int calculateAverage(ArrayList<Integer> valueList){
         long sum = 0;
