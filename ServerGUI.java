@@ -206,8 +206,7 @@ public class ServerGUI {
 		try {
 			startServer();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ServerConsole.setErrorMessage("Cannot start server");
 		}
 	}
 		public static JTextPane getTextPane() {
