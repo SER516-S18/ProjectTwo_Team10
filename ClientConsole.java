@@ -8,7 +8,7 @@ import java.awt.Dimension;
 * @version 0.9
 * @since   02/17/2018
 */
-public class Client_Console extends JPanel{
+public class ClientConsole extends JPanel{
     
     static JTextPane console =  ClientWindow.getTextPane();
 	private final static Logger printing = Logger.getLogger(ClientWindow.class.getName());
