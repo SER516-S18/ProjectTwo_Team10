@@ -14,7 +14,6 @@ public class generateAverageValue {
         long sum = 0;
         for(int v : valueList){
             sum += v;
-            values.add(v);
         }
         long res = sum/values.size();
         return (int)res;
