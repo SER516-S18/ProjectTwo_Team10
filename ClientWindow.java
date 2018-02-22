@@ -1,3 +1,4 @@
+package plotdiagram;
 
 import java.awt.EventQueue;
 import java.io.BufferedReader;
@@ -8,18 +9,24 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Panel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JTextPane;
 
 public class ClientWindow extends JFrame implements ActionListener {
@@ -159,7 +166,21 @@ public class ClientWindow extends JFrame implements ActionListener {
 		label_3.setFont(new Font("Courier New", Font.PLAIN, 16));
 		panel_9.add(label_3);
 		
-		Panel panel_10 = new Panel();
+		//Panel panel_10 = new Panel();
+		//random list for test
+		List<List<Integer>> values = new ArrayList<List<Integer>>();
+	      Random random = new Random();
+	      int maxDataPoints = 16;
+	      int maxScore = 20;
+	      for (int j=0; j<3; j++){
+	    	List<Integer> temp = new ArrayList<Integer>();
+	    	values.add(temp);  
+	        for (int i = 0; i < maxDataPoints ; i++) {
+	          values.get(j).add(random.nextInt(maxScore));
+	        }
+	        System.out.println(values);
+	      }
+		PlotDiagram panel_10 = new PlotDiagram(values);
 		panel_10.setBackground(new Color(255, 182, 193));
 		panel_10.setBounds(10, 16, 406, 257);
 		panel.add(panel_10);
