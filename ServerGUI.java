@@ -164,14 +164,13 @@ public class ServerGUI {
 		//textField.setColumns(10);
 		
 		
-		txtpnConsole.setText("Console:");
+		txtpnConsole.setText("Console: ");
 		txtpnConsole.setEditable(false);
 		txtpnConsole.setFont(new Font("Courier New", Font.PLAIN, 18));
 		txtpnConsole.setBackground(new Color(211, 211, 211));
 		txtpnConsole.setBounds(12, 390, 628, 138);
 		txtpnConsole.setBorder(BorderFactory.createLineBorder(Color.black));
 		frmServer.getContentPane().add(txtpnConsole);
-		ServerConsole.setErrorMessage("Hello");
 
 		try {
 			startServer();
