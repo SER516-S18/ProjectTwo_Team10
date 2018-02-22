@@ -16,23 +16,23 @@ public class ClientConsole extends JPanel{
     private final static Logger printing = Logger.getLogger(ClientWindow.class.getName());
     
     public static void setErrorMessage(String error) {
-        try {
-            console.setContentType( "text/html" );
-            HTMLDocument doc=(HTMLDocument) console.getStyledDocument();
-            doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:red\">" + new Date() + " " + error + "</span> <br>");
-        } catch (Exception ex) {
-            printing.log(Level.SEVERE, "Error adding message to console", ex);
-        }
+	    try {
+		    HTMLDocument disp1=(HTMLDocument) console.getStyledDocument();
+		    console.setContentType( "text/html" );
+		    disp1.insertAfterEnd(doc.getCharacterElement(disp1.getLength()),"<span style=\"color:red\">" + new Date() + " " + error + "</span> <br>");
+	    } catch (Exception ex) {
+		    printing.log(Level.SEVERE, "Error adding message to console", ex);
+	    }
     }
 	
     public static void setMessage(String message) {
-        try {
-            console.setContentType( "text/html" );
-            HTMLDocument doc=(HTMLDocument) console.getStyledDocument();
-            doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:black\">" + new Date() + " " + message + "</span> <br>");
-        } catch (Exception ex) {
-            printing.log(Level.SEVERE, "Error adding message to console", ex);
-        }
+	    try {
+		    HTMLDocument disp2=(HTMLDocument) console.getStyledDocument();
+		    console.setContentType( "text/html" );
+		    disp2.insertAfterEnd(disp2.getCharacterElement(disp2.getLength()),"<span style=\"color:black\">" + new Date() + " " + message + "</span> <br>");
+	    } catch (Exception ex) {
+		    printing.log(Level.SEVERE, "Error adding message to console", ex);
+	    }
     }
     
     /**
