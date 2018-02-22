@@ -18,8 +18,8 @@ public class ClientValCalculator {
     private ClientValCalculator() {}
 
     /**
-      * Read an integer list and update the highest and lowest value
-      * @param List<Integer>
+      * Read an integer list and update the highest, lowest and average value
+      * @param list
       */
     public static void readList(List<Integer> list) {
         long sum = 0;
