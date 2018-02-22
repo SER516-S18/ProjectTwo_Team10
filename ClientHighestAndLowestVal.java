@@ -42,4 +42,15 @@ public class ClientHighestAndLowestVal {
     public static int getLowestVal() {
         return lowestVal;
     }
+    /**
+     * @return the average value
+     */
+    public int calculateAverage(ArrayList<Integer> valueList){
+        long sum = 0;
+        for(int v : valueList){
+            sum += v;
+        }
+        long average = sum/valueList.size();
+        return (int)average;
+    }
 }
