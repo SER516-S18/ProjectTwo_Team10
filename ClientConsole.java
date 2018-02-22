@@ -11,27 +11,27 @@ import java.awt.Dimension;
 public class ClientConsole extends JPanel{
     
     static JTextPane console =  ClientWindow.getTextPane();
-	private final static Logger printing = Logger.getLogger(ClientWindow.class.getName());
-
-	public static void setErrorMessage(String error) {
-		try {
-			console.setContentType( "text/html" );
-			HTMLDocument doc=(HTMLDocument) console.getStyledDocument();
-            		doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:red\">" + new Date() + " " + error + "</span> <br>");
-		} catch (Exception ex) {
-			printing.log(Level.SEVERE, "Error adding message to console", ex);
-		}
-	}
+    private final static Logger printing = Logger.getLogger(ClientWindow.class.getName());
+    
+    public static void setErrorMessage(String error) {
+        try {
+            console.setContentType( "text/html" );
+            HTMLDocument doc=(HTMLDocument) console.getStyledDocument();
+            doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:red\">" + new Date() + " " + error + "</span> <br>");
+        } catch (Exception ex) {
+            printing.log(Level.SEVERE, "Error adding message to console", ex);
+        }
+    }
 	
-	public static void setMessage(String message) {
-		try {
-			console.setContentType( "text/html" );
-			HTMLDocument doc=(HTMLDocument) console.getStyledDocument();
-			doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:black\">" + new Date() + " " + message + "</span> <br>");
-		} catch (Exception ex) {
-			printing.log(Level.SEVERE, "Error adding message to console", ex);
-		}
-	}
+    public static void setMessage(String message) {
+        try {
+            console.setContentType( "text/html" );
+            HTMLDocument doc=(HTMLDocument) console.getStyledDocument();
+            doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"<span style=\"color:black\">" + new Date() + " " + message + "</span> <br>");
+        } catch (Exception ex) {
+            printing.log(Level.SEVERE, "Error adding message to console", ex);
+        }
+    }
     
     /**
     Font f = new Font("Serif", Font.BOLD, 15);
