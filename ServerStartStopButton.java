@@ -7,11 +7,13 @@ import java.net.Socket;
  * User Story #4: StartStopButton(Server)
  */
 
-
 public class ServerStartStopButton {
     
     Socket serverSocket = null;
     
+    /**
+	 * Press the button and start working.
+	 */
     public static void start() {
         try {
             serverSocket = new Socket("localhost", 1516);
@@ -21,6 +23,9 @@ public class ServerStartStopButton {
         }
     }
     
+     /**
+	 * Press the button and stop working.
+	 */
     public static void stop() {
         try {
             serverSocket.close();
@@ -28,5 +33,5 @@ public class ServerStartStopButton {
             e.printStackTrace("Stop Now");
         }
     }
-   
+    
 }
