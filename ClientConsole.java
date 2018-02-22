@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*; 
 import java.awt.event.*;
 import java.awt.Dimension;
-
+import java.util.Date;
+import java.util.logging.*;
+import javax.swing.text.html.HTMLDocument;
 /**
 * @author  Binbin Yan
 * @version 0.9
