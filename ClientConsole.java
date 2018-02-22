@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.logging.*;
 import javax.swing.text.html.HTMLDocument;
 /**
+* @SER516-Project 2
 * @author  Binbin Yan
 * @version 0.9
 * @since   02/17/2018
