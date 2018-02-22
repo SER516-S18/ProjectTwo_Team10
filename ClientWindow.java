@@ -7,6 +7,9 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -17,6 +20,7 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Panel;
 import java.awt.Font;
+import java.awt.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
@@ -207,10 +211,23 @@ public class ClientWindow extends JFrame implements ActionListener {
                                             new InputStreamReader(socket.getInputStream())); 
                    while (true) {
                        String s = getNoOfChannels().toString();
+                       String Server_Input;
+                       ArrayList <String> String_List;
+                       ArrayList<Integer> al = new ArrayList<Integer>();
                        out.write(s);
                        out.newLine();
                        out.flush();
-                       System.out.println(in.readLine());
+                       if(flag == 1)
+                       
+                    	   {
+                    	   Server_Input = in.readLine();
+                    	   String[] values = Server_Input.split(",");
+                    	   for(int i = 0; i < values.length; i++)
+                    	   {
+                    		   al.add(Integer.parseInt(values[i]));
+                    	   }
+                           }
+                       
                        Thread.sleep(200);
                        if(flag == 0)
                     		   socket.close();
