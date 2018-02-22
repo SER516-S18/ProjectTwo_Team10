@@ -164,13 +164,36 @@ public class ServerGUI {
 		//textField.setColumns(10);
 		
 		
-		txtpnConsole.setText("Console: ");
+		JEditorPane consolePanel = new JEditorPane();
+		JScrollPane consoleScroll = new JScrollPane(txtpnConsole);
+		JTextPane consolePane = new JTextPane();
+		
+		consolePane.setText(" Console: ");
+		consolePane.setOpaque(false);
+		consolePane.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
+		
+		consoleScroll.setOpaque(false);
+		consoleScroll.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
+		consoleScroll.setPreferredSize(new Dimension(600,118));
+
+		consolePanel.setFont(new Font("Courier New", Font.PLAIN, 18));
+		consolePanel.setBackground(new Color(211, 211, 211));
+		consolePanel.setBounds(12, 390, 628, 138);
+		consolePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		consolePanel.setLayout(new BoxLayout(consolePanel,BoxLayout.PAGE_AXIS));
+		consolePanel.setVisible(true);
+		
+		txtpnConsole.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
 		txtpnConsole.setEditable(false);
-		txtpnConsole.setFont(new Font("Courier New", Font.PLAIN, 18));
 		txtpnConsole.setBackground(new Color(211, 211, 211));
-		txtpnConsole.setBounds(12, 390, 628, 138);
-		txtpnConsole.setBorder(BorderFactory.createLineBorder(Color.black));
-		frmServer.getContentPane().add(txtpnConsole);
+		txtpnConsole.setLayout(new BoxLayout(txtpnConsole,BoxLayout.Y_AXIS));
+		txtpnConsole.setEditable(false);
+		txtpnConsole.setBackground(new Color(211, 211, 211));
+		
+		consolePanel.add(consolePane);
+		consolePanel.add(consoleScroll);
+		
+		frmServer.getContentPane().add(consolePanel);
 
 		try {
 			startServer();
