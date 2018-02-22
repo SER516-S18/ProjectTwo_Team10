@@ -215,7 +215,7 @@ public class ServerGUI {
 
 
     public static void startServer() throws IOException {
-    	serverSocket = new ServerSocket(1516);
+    	serverSocket = new ServerSocket(9090);
     	 Socket clientSocket = serverSocket.accept();
     
     	ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -233,7 +233,7 @@ public class ServerGUI {
     	          ArrayList<Integer> arrayList = grn.RandomNumberFunction();
     	          
     	            try {
-					objectOutput.writeObject(arrayList);
+		 	objectOutput.writeObject(arrayList);
     	                Thread.sleep(1000/frequency);
     	                arrayList.clear();
     	            } catch(Exception e) {
