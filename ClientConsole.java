@@ -19,7 +19,7 @@ public class ClientConsole extends JPanel{
 	    try {
 		    HTMLDocument disp1=(HTMLDocument) console.getStyledDocument();
 		    console.setContentType( "text/html" );
-		    disp1.insertAfterEnd(doc.getCharacterElement(disp1.getLength()),"<span style=\"color:red\">" + new Date() + " " + error + "</span> <br>");
+		    disp1.insertAfterEnd(disp1.getCharacterElement(disp1.getLength()),"<span style=\"color:red\">" + new Date() + " " + error + "</span> <br>");
 	    } catch (Exception ex) {
 		    printing.log(Level.SEVERE, "Error adding message to console", ex);
 	    }
