@@ -9,7 +9,9 @@ import java.util.List;
  */
 public class ClientAverageValue {
     private static int average = 0;
-
+    /**
+     * make the average a singleton 
+     */
     private ClientAverageValue(){}
     /**
      * @param valueList is value list in the client that contains all values
@@ -26,19 +28,5 @@ public class ClientAverageValue {
      */
     public static int getAverage(){
         return average;
-    }
-    public static void main(String[] args) {
-        List<Integer> valueList = new ArrayList<>();
-        valueList.add(3);
-        valueList.add(5);
-        valueList.add(3);
-        valueList.add(4);
-        valueList.add(5);
-        calculateAverage(valueList);
-        System.out.println(getAverage());
-        for(int i : valueList){
-            System.out.println("+" + i);
-        }
-
     }
 }
