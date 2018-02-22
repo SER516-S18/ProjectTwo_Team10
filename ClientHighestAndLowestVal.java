@@ -7,17 +7,19 @@ import java.util.List;
   * User Story #10: Get highest and lowest val.
   */
 
-public class ClientHighestAndLowestVal.java {
+public class ClientHighestAndLowestVal {
     private static int highestVal;
     private static int lowestVal;
 
     static {
         highestVal = 0;
         lowestVal = 0;
-        averageVal = 0;
     }
 
-    private ClientHighestAndLowestVal.java() {}
+    /**
+      * Singleton
+      */
+    private ClientHighestAndLowestVal() {}
 
     /**
       * Read an integer list and update the highest, lowest value.
