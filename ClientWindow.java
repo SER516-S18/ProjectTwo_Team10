@@ -27,6 +27,8 @@ public class ClientWindow extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
+	static JTextPane txtpnConsole = new JTextPane();
+
 
 	/**
 	 * Launch the application.
@@ -163,7 +165,6 @@ public class ClientWindow extends JFrame implements ActionListener {
 		panel_10.setBounds(10, 16, 406, 257);
 		panel.add(panel_10);
 
-		JTextPane txtpnConsole = new JTextPane();
 		//txtpnConsole.setFont(new Font("Courier New", Font.PLAIN, 16));
 		txtpnConsole.setBackground(SystemColor.controlHighlight);
 		txtpnConsole.setText("Console:");
