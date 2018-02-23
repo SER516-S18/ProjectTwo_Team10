@@ -144,7 +144,8 @@ public class ServerGUI implements ActionListener {
 
 		try {
 			Thread.sleep(1000);
-		} catch (InterruptedException e) {
+		} 
+		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -191,15 +192,13 @@ public class ServerGUI implements ActionListener {
 			flag = 1;
 			ledIndicator.update(flag);
 			System.out.println("Started");
-
-			Thread serverThread = new Thread(new ServerThread());
+         		Thread serverThread = new Thread(new ServerThread());
 			serverThread.start();
-		} else if (flag == 1) {
+		} 
+		else if (flag == 1) {
 			flag = 0;
 			ledIndicator.update(flag);
-
-			System.out.println("Stopped");
-			//serverSocket.close();
+			System.out.println("Stopped");			
 		}
 
 	}
@@ -219,9 +218,6 @@ public class ServerGUI implements ActionListener {
 	}
 
 	static class ServerThread implements Runnable {
-
-//		private BufferedReader input;
-
 		public void run() {
 			try {
 				serverSocket = new ServerSocket(9090);
@@ -230,23 +226,18 @@ public class ServerGUI implements ActionListener {
 					// client request handling logic
 					System.out.println("Port 9090 is working");
 				}
-
-			} catch (IOException e) {
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 
 			int frequency, low, high;
 			String channel = null;
-//			ObjectOutputStream objectOutput = null;
-
-			try {
-				
-				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-				
-
-				channel = in.readLine();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+			try {				
+				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));				
+			    	channel = in.readLine();
+			} 
+			catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			high = Integer.parseInt(ServerGUI.txtHighValue.getText());
@@ -263,15 +254,14 @@ public class ServerGUI implements ActionListener {
 							System.out.println(arrayList);
 							Thread.sleep(1000 / 3);
 							arrayList.clear();
-						} catch (Exception e) {
+						} 
+						catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 				}
 			};
 			threadNew.start();
-
 		}
 	}
-
 }
