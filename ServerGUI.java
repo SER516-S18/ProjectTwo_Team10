@@ -31,28 +31,218 @@ import javax.swing.UIManager;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * @SER516 ProjecTwo_Team10
  * @author Kanchan Wakchaure
  * @Version 1.0
- * User Story #14: Server GUI
+ * Server GUI to start/stop the server and enter the value ranges
  */
 
-public class ServerGUI {
+public class ServerGUI implements ActionListener{
 
 	private JFrame frmServer;
-	//private JTextField textField;
-	static JTextPane textPane = new JTextPane();
-	static JTextPane textPane_1 = new JTextPane();
 	private static ServerSocket serverSocket;
-	static JTextPane txtpnConsole = new JTextPane();
-	static JTextPane textPane_3 = new JTextPane();
-	static JTextField textField = new JTextField();
+	private static int flag = 0;
+	static JTextPane txtHighValue = new JTextPane();
+	static JTextPane txtLowValue = new JTextPane();
+	static JTextPane consolePane = new JTextPane();
+	static JTextPane indicatorPane = new JTextPane();
+	static JTextField txtFrequency = new JTextField();
+	static Indicator ledIndicator = new Indicator(flag);
 
-	/**
-	 * Launch the application.
-	 */
+    //Create the application
+	public ServerGUI() {
+		initialize();
+	}
+	
+    //Initialize the contents of the frame.
+	private void initialize() {
+		 
+		frmServer = new JFrame();
+		frmServer.setTitle("Server");
+		frmServer.setBounds(100, 100, 670, 588);
+		frmServer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmServer.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBackground(new Color(220, 220, 220));
+		panel.setBounds(12, 59, 628, 323);
+		frmServer.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JButton btnStartStop = new JButton("start / stop");
+		btnStartStop.setBackground(new Color(255, 204, 204));
+		btnStartStop.setFont(new Font("Courier New", Font.PLAIN, 18));
+		btnStartStop.setBounds(436, 13, 192, 34);
+		btnStartStop.setBorder(BorderFactory.createLineBorder(Color.black));
+		btnStartStop.addActionListener(this);
+		
+		frmServer.getContentPane().add(btnStartStop);
+				
+		JLabel lblHighValue = new JLabel("<html>Highest<br>value:</html>");
+		lblHighValue.setBounds(345, 13, 133, 61);
+		panel.add(lblHighValue);
+		lblHighValue.setBackground(new Color(173, 216, 230));
+		lblHighValue.setOpaque(true);
+		lblHighValue.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHighValue.setFont(new Font("Courier New", Font.PLAIN, 18));
+		lblHighValue.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		JLabel lblLowValue = new JLabel("<html>Lowest<br>value:</html>");
+		lblLowValue.setBounds(345, 87, 133, 61);
+		panel.add(lblLowValue);
+		lblLowValue.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLowValue.setFont(new Font("Courier New", Font.PLAIN, 18));
+		lblLowValue.setBorder(BorderFactory.createLineBorder(Color.black));
+		lblLowValue.setOpaque(true);
+		lblLowValue.setBackground(new Color(255, 204, 204));
+		
+		JLabel lblFrequency = new JLabel("<html>Frequency<br>(Hz):</html>");
+		lblFrequency.setBounds(345, 161, 133, 61);
+		panel.add(lblFrequency);
+		lblFrequency.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFrequency.setFont(new Font("Courier New", Font.PLAIN, 18));
+		lblFrequency.setBorder(BorderFactory.createLineBorder(Color.black));
+		lblFrequency.setBackground(new Color(173, 216, 230));
+		lblFrequency.setOpaque(true);
+		
+		txtHighValue.setBounds(490, 13, 126, 61);
+		panel.add(txtHighValue);
+		txtHighValue.setBackground(new Color(255, 204, 204));
+		txtHighValue.setFont(new Font("Courier New", Font.PLAIN, 18));
+		txtHighValue.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		txtLowValue.setBounds(490, 87, 126, 61);
+		panel.add(txtLowValue);
+		txtLowValue.setBackground(new Color(173, 216, 230));
+		txtLowValue.setFont(new Font("Courier New", Font.PLAIN, 18));
+		txtLowValue.setBorder(BorderFactory.createLineBorder(Color.black));	
+		
+		txtFrequency.setFont(new Font("Courier New", Font.PLAIN, 18));		
+		txtFrequency.setBounds(490, 161, 126, 61);
+		panel.add(txtFrequency);
+		txtFrequency.setHorizontalAlignment(SwingConstants.CENTER);
+		txtFrequency.setBackground(new Color(255, 204, 204));
+		txtFrequency.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		indicatorPane.setBounds(22, 13, 311, 296);
+		panel.add(indicatorPane);
+		indicatorPane.setBackground(new Color(255, 204, 204));
+		indicatorPane.setFont(new Font("Courier New", Font.PLAIN, 18));
+		indicatorPane.setBorder(BorderFactory.createLineBorder(Color.black));
+		indicatorPane.setEditable(false);
+		
+		//Calling the indicator
+		ledIndicator.setBorder(BorderFactory.createLineBorder(Color.black));
+		ledIndicator.setBounds(22,13,311,296);
+		indicatorPane.add(ledIndicator);
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+					
+		JEditorPane consolePanel = new JEditorPane();
+		consolePane.setFont(new Font("Courier New", Font.PLAIN, 18));
+		JScrollPane consoleScroll = new JScrollPane(consolePane);
+		JTextPane lblConsole = new JTextPane();
+		
+		consolePanel.setFont(new Font("Courier New", Font.PLAIN, 18));
+		consolePanel.setBackground(new Color(211, 211, 211));
+		consolePanel.setBounds(12, 390, 628, 138);
+		consolePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		consolePanel.setLayout(new BoxLayout(consolePanel,BoxLayout.PAGE_AXIS));
+		consolePanel.setVisible(true);		
+		
+		lblConsole.setFont(new Font("Courier New", Font.PLAIN, 18));
+		lblConsole.setText(" Console: ");
+		lblConsole.setOpaque(false);
+		lblConsole.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
+		
+		consoleScroll.setOpaque(false);
+		consoleScroll.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
+		consoleScroll.setPreferredSize(new Dimension(600,118));
+		
+		consolePanel.add(lblConsole);
+		consolePanel.add(consoleScroll);
+		
+		consolePane.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
+		consolePane.setEditable(false);
+		consolePane.setBackground(new Color(211, 211, 211));
+		consolePane.setLayout(new BoxLayout(consolePane,BoxLayout.Y_AXIS));
+		consolePane.setEditable(false);
+		consolePane.setBackground(new Color(211, 211, 211));
+				
+		frmServer.getContentPane().add(consolePanel);
+	}
+
+	public static JTextPane getTextPane() {
+			return consolePane;
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+			try {				
+				if (flag == 0) {
+					flag = 1;	
+					ledIndicator.update(flag);
+					System.out.println("Started");
+					startServer();
+				}
+				else if (flag == 1) {
+					flag = 0;
+					ledIndicator.update(flag);
+					System.out.println("Stopped");
+				}
+					
+			} catch (IOException exc) {
+				ServerConsole.setErrorMessage("Cannot start server");
+			}
+
+	}
+
+    public static void startServer() throws IOException {
+    	int frequency, 
+    	    low, 
+    	    high;
+    	serverSocket = new ServerSocket(9090);
+    	Socket clientSocket = serverSocket.accept();
+    
+    	ObjectOutputStream objectOutput = 
+    			new ObjectOutputStream(clientSocket.getOutputStream());
+    	BufferedReader in = new BufferedReader(
+    			new InputStreamReader(clientSocket.getInputStream()));
+    	String channel = in.readLine();
+    	high = Integer.parseInt(ServerGUI.txtHighValue.getText());
+    	low = Integer.parseInt(ServerGUI.txtLowValue.getText());
+    	frequency = Integer.parseInt(ServerGUI.txtFrequency.getText());
+    	GenerateRandomNumbers grn = 
+    			new GenerateRandomNumbers(high, low, Integer.parseInt(channel));
+    	Thread threadNew = new Thread() { 
+    		    public void run() {
+    		    	while(true) {    	        		
+    		    		ArrayList<Integer> arrayList = grn.RandomNumberFunction();    	          
+    		    		try {
+    		    			objectOutput.writeObject(arrayList);
+    		    			System.out.println(arrayList);
+    		    			Thread.sleep(1000/frequency);
+    		    			arrayList.clear();
+    		    		} 
+    		    		catch(Exception e) {
+    		    			e.printStackTrace();
+    		    		}
+    		    	}
+    		    }
+    	};
+    threadNew.start();    
+    }
+
+	
+	//Launch the application
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -65,183 +255,5 @@ public class ServerGUI {
 			}
 		});
 	}
-
-	/**
-	 * Create the application.
-	 */
-	public ServerGUI() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frmServer = new JFrame();
-		frmServer.setTitle("Server");
-		frmServer.setBounds(100, 100, 670, 588);
-		frmServer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmServer.getContentPane().setLayout(null);
-		
-		JButton btnNewButton = new JButton("start / stop");
-		btnNewButton.setBackground(new Color(255, 204, 204));
-		btnNewButton.setFont(new Font("Courier New", Font.PLAIN, 18));
-		btnNewButton.setBounds(436, 13, 192, 34);
-		btnNewButton.setBorder(BorderFactory.createLineBorder(Color.black));
-		frmServer.getContentPane().add(btnNewButton);
-		
-		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBackground(new Color(220, 220, 220));
-		panel.setBounds(12, 59, 628, 323);
-		frmServer.getContentPane().add(panel);
-		panel.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("<html>Highest<br>value:</html>");
-		lblNewLabel.setBounds(345, 13, 133, 61);
-		panel.add(lblNewLabel);
-		lblNewLabel.setBackground(new Color(173, 216, 230));
-		lblNewLabel.setOpaque(true);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Courier New", Font.PLAIN, 18));
-		lblNewLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		
-		JLabel lbllowestvalue = new JLabel("<html>Lowest<br>value:</html>");
-		lbllowestvalue.setBounds(345, 87, 133, 61);
-		panel.add(lbllowestvalue);
-		lbllowestvalue.setHorizontalAlignment(SwingConstants.CENTER);
-		lbllowestvalue.setFont(new Font("Courier New", Font.PLAIN, 18));
-		lbllowestvalue.setBorder(BorderFactory.createLineBorder(Color.black));
-		lbllowestvalue.setOpaque(true);
-		lbllowestvalue.setBackground(new Color(255, 204, 204));
-		
-		JLabel lblfrequencyhz = new JLabel("<html>Frequency<br>(Hz):</html>");
-		lblfrequencyhz.setBounds(345, 161, 133, 61);
-		panel.add(lblfrequencyhz);
-		lblfrequencyhz.setHorizontalAlignment(SwingConstants.CENTER);
-		lblfrequencyhz.setFont(new Font("Courier New", Font.PLAIN, 18));
-		lblfrequencyhz.setBorder(BorderFactory.createLineBorder(Color.black));
-		lblfrequencyhz.setBackground(new Color(173, 216, 230));
-		lblfrequencyhz.setOpaque(true);
-		
-		textPane.setBounds(490, 13, 126, 61);
-		panel.add(textPane);
-		textPane.setBackground(new Color(255, 204, 204));
-		textPane.setFont(new Font("Courier New", Font.PLAIN, 18));
-		textPane.setBorder(BorderFactory.createLineBorder(Color.black));
-		//textPane.setEditable(false);
-		
-		textPane_1.setBounds(490, 87, 126, 61);
-		panel.add(textPane_1);
-		textPane_1.setBackground(new Color(173, 216, 230));
-		textPane_1.setFont(new Font("Courier New", Font.PLAIN, 18));
-		textPane_1.setBorder(BorderFactory.createLineBorder(Color.black));
-		//textPane_1.setEditable(false);
-		
-		
-		textPane_3.setBounds(22, 13, 311, 296);
-		panel.add(textPane_3);
-		textPane_3.setBackground(new Color(255, 204, 204));
-		textPane_3.setFont(new Font("Courier New", Font.PLAIN, 18));
-		textPane_3.setBorder(BorderFactory.createLineBorder(Color.black));
-		textPane_3.setEditable(false);
-		
-		//Calling the indicator
-		Indicator ledIndicator = new Indicator(1);
-		ledIndicator.setBorder(BorderFactory.createLineBorder(Color.black));
-		ledIndicator.setBounds(22,13,311,296);
-		textPane_3.add(ledIndicator);
-		ledIndicator.update(1);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		ledIndicator.update(0);
-		//End of indicator code
-		
-		
-		textField.setBounds(490, 161, 126, 61);
-		panel.add(textField);
-		//textField.setEditable(false);
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		//textField.setFont(new Font("Courier New", Font.PLAIN, 18));
-		textField.setBackground(new Color(255, 204, 204));
-		textField.setBorder(BorderFactory.createLineBorder(Color.black));
-		//textField.setColumns(10);
-		
-		
-		JEditorPane consolePanel = new JEditorPane();
-		JScrollPane consoleScroll = new JScrollPane(txtpnConsole);
-		JTextPane consolePane = new JTextPane();
-		
-		consolePane.setFont(new Font("Courier New", Font.PLAIN, 18));
-		consolePane.setText(" Console: ");
-		consolePane.setOpaque(false);
-		consolePane.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
-		
-		consoleScroll.setOpaque(false);
-		consoleScroll.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
-		consoleScroll.setPreferredSize(new Dimension(600,118));
-
-		consolePanel.setFont(new Font("Courier New", Font.PLAIN, 18));
-		consolePanel.setBackground(new Color(211, 211, 211));
-		consolePanel.setBounds(12, 390, 628, 138);
-		consolePanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		consolePanel.setLayout(new BoxLayout(consolePanel,BoxLayout.PAGE_AXIS));
-		consolePanel.setVisible(true);
-		
-		txtpnConsole.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
-		txtpnConsole.setEditable(false);
-		txtpnConsole.setBackground(new Color(211, 211, 211));
-		txtpnConsole.setLayout(new BoxLayout(txtpnConsole,BoxLayout.Y_AXIS));
-		txtpnConsole.setEditable(false);
-		txtpnConsole.setBackground(new Color(211, 211, 211));
-		
-		consolePanel.add(consolePane);
-		consolePanel.add(consoleScroll);
-		
-		frmServer.getContentPane().add(consolePanel);
-
-		try {
-			startServer();
-		} catch (IOException e) {
-			ServerConsole.setErrorMessage("Cannot start server");
-		}
-	}
-		public static JTextPane getTextPane() {
-			return txtpnConsole;
-		}
-
-
-    public static void startServer() throws IOException {
-    	serverSocket = new ServerSocket(9090);
-    	 Socket clientSocket = serverSocket.accept();
-    
-    	ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
-    	BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
-    	 String channel = in.readLine();
-    	 int frequency = ServerHLValues.getFrequency();
-    	int low = ServerHLValues.getLowestVal();
-    	int high = ServerHLValues.getHighestVal();;
-    	GenerateRandomNumbers grn = new GenerateRandomNumbers(high, low,  Integer.parseInt(channel));
-    	
-    	new Thread() {
-    	    public void run() {
-    	        while(true) {
-    	        		
-    	          ArrayList<Integer> arrayList = grn.RandomNumberFunction();
-    	          
-    	            try {
-		 	objectOutput.writeObject(arrayList);
-    	                Thread.sleep(1000/frequency);
-    	                arrayList.clear();
-    	            } catch(Exception e) {
-    	            	e.printStackTrace();
-    	            	//add to console in case of any exception
-    	            }
-    	        }
-    	    }
-    	}.start();    
-    }
+	
 }
