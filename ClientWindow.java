@@ -222,9 +222,10 @@ public class ClientWindow extends JFrame implements ActionListener {
                     ArrayList<Integer> arrayList = new ArrayList<Integer>();
                     BufferedWriter out = new BufferedWriter(
                             new OutputStreamWriter(socket.getOutputStream()));
-                    ObjectInputStream objectInput = new ObjectInputStream(socket.getInputStream());
+                    
 
                     while (true) {
+                        ObjectInputStream objectInput = new ObjectInputStream(socket.getInputStream());
                         Object object = objectInput.readObject();
                         arrayList =  (ArrayList<Integer>) object;
                         String s = getNoOfChannels().toString();
