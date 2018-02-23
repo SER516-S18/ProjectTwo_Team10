@@ -53,6 +53,7 @@ public class ServerGUI implements ActionListener {
 	static JTextPane indicatorPane = new JTextPane();
 	static JTextField txtFrequency = new JTextField();
 	static Indicator ledIndicator = new Indicator(flag);
+	static Socket socket;
 
 	// Create the application
 	public ServerGUI() {
@@ -144,8 +145,7 @@ public class ServerGUI implements ActionListener {
 
 		try {
 			Thread.sleep(1000);
-		} 
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -192,13 +192,15 @@ public class ServerGUI implements ActionListener {
 			flag = 1;
 			ledIndicator.update(flag);
 			System.out.println("Started");
-         		Thread serverThread = new Thread(new ServerThread());
+
+			Thread serverThread = new Thread(new ServerThread());
 			serverThread.start();
-		} 
-		else if (flag == 1) {
+		} else if (flag == 1) {
 			flag = 0;
 			ledIndicator.update(flag);
-			System.out.println("Stopped");			
+
+			System.out.println("Stopped");
+			//serverSocket.close();
 		}
 
 	}
@@ -218,50 +220,62 @@ public class ServerGUI implements ActionListener {
 	}
 
 	static class ServerThread implements Runnable {
+
+//		private BufferedReader input;
+
 		public void run() {
 			try {
 				serverSocket = new ServerSocket(9090);
 				while (true) {
-					Socket socket = serverSocket.accept();
+					socket = serverSocket.accept();
 					// client request handling logic
 					System.out.println("Port 9090 is working");
+					GenerateRandomNumbers grn = new GenerateRandomNumbers(1000, 20, 3);
+					new Thread() {
+						public void run() {
+							while (true) {
+								ArrayList<Integer> arrayList = grn.RandomNumberFunction();
+								System.out.print(arrayList);
+								try {
+									ObjectOutputStream objectOutput = new ObjectOutputStream(socket.getOutputStream());
+									objectOutput.writeObject(arrayList);
+									System.out.println(arrayList);
+									Thread.sleep(1000 / 3);
+									arrayList.clear();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+						}
+					}.start();
+					
 				}
-			} 
-			catch (IOException e) {
+
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
 			int frequency, low, high;
 			String channel = null;
-			try {				
-				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));				
-			    	channel = in.readLine();
-			} 
-			catch (IOException e1) {
+//			ObjectOutputStream objectOutput = null;
+
+			try {
+				
+				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				
+
+				channel = in.readLine();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			high = Integer.parseInt(ServerGUI.txtHighValue.getText());
-			low = Integer.parseInt(ServerGUI.txtLowValue.getText());
-			frequency = Integer.parseInt(ServerGUI.txtFrequency.getText());
-			GenerateRandomNumbers grn = new GenerateRandomNumbers(1000, 20, 3);
-			Thread threadNew = new Thread() {
-				public void run() {
-					while (true) {
-						ArrayList<Integer> arrayList = grn.RandomNumberFunction();
-						try {
-							ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
-							objectOutput.writeObject(arrayList);
-							System.out.println(arrayList);
-							Thread.sleep(1000 / 3);
-							arrayList.clear();
-						} 
-						catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			};
-			threadNew.start();
+			//high = Integer.parseInt(ServerGUI.txtHighValue.getText());
+			//low = Integer.parseInt(ServerGUI.txtLowValue.getText());
+			//frequency = Integer.parseInt(ServerGUI.txtFrequency.getText());
+			
+			
+
 		}
 	}
+
 }
