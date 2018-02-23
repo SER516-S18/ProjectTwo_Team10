@@ -177,7 +177,8 @@ public class ServerGUI implements ActionListener {
 	public static JTextPane getTextPane() {
 		return consolePane;
 	}
-
+       
+	/* Start and stop Server */ 
 	public void actionPerformed(ActionEvent e) {
 		if (serverState == 0) {
 			serverState = 1;
