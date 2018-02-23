@@ -20,11 +20,11 @@ public class ClientWindow extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
     private JFrame frame;
     static JTextPane console = new JTextPane();
-    private static PlotDiagramPanel panel_10;
-    private static JLabel panel_6;
-    private static JLabel panel_7;
-    private static JLabel panel_8;
-    private static JLabel panel_9;
+    private static PlotDiagramPanel diagramPanel;
+    private static JLabel highestValLabel;
+    private static JLabel lowestValLabel;
+    private static JLabel averageValLabel;
+    private static JLabel freqValLabel;
 
     /**
      * Launch the application.
@@ -62,86 +62,86 @@ public class ClientWindow extends JFrame implements ActionListener {
         startStop.addActionListener(this);
         frame.getContentPane().add(startStop);
 
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(220, 220, 220));
-        panel.setBounds(15, 58, 748, 300);
-        frame.getContentPane().add(panel);
-        panel.setLayout(null);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBackground(new Color(220, 220, 220));
+        mainPanel.setBounds(15, 58, 748, 300);
+        frame.getContentPane().add(mainPanel);
+        mainPanel.setLayout(null);
 
-        JPanel panel_1 = new JPanel();
-        panel_1.setBackground(new Color(173, 216, 230));
-        panel_1.setBounds(433, 16, 157, 38);
-        panel.add(panel_1);
+        JPanel highestValNamePanel = new JPanel();
+        highestValNamePanel.setBackground(new Color(173, 216, 230));
+        highestValNamePanel.setBounds(433, 16, 157, 38);
+        mainPanel.add(highestValNamePanel);
 
-        JLabel highestValue = new JLabel("Highest Value:");
-        highestValue.setFont(new Font("Courier New", Font.PLAIN, 16));
-        panel_1.add(highestValue);
+        JLabel highestValNameLabel = new JLabel("Highest Value:");
+        highestValNameLabel.setFont(new Font("Courier New", Font.PLAIN, 16));
+        highestValNamePanel.add(highestValNameLabel);
 
-        JPanel panel_2 = new JPanel();
-        panel_2.setBackground(new Color(255, 182, 193));
-        panel_2.setBounds(433, 70, 157, 38);
-        panel.add(panel_2);
+        JPanel lowestValNamePanel = new JPanel();
+        lowestValNamePanel.setBackground(new Color(255, 182, 193));
+        lowestValNamePanel.setBounds(433, 70, 157, 38);
+        mainPanel.add(lowestValNamePanel);
 
-        JLabel lowestValue = new JLabel("Lowest Value:");
-        lowestValue.setFont(new Font("Courier New", Font.PLAIN, 16));
-        panel_2.add(lowestValue);
+        JLabel lowestValNameLabel = new JLabel("Lowest Value:");
+        lowestValNameLabel.setFont(new Font("Courier New", Font.PLAIN, 16));
+        lowestValNamePanel.add(lowestValNameLabel);
 
-        JPanel panel_3 = new JPanel();
-        panel_3.setBackground(new Color(173, 216, 230));
-        panel_3.setBounds(433, 124, 157, 38);
-        panel.add(panel_3);
+        JPanel averageValNamePanel = new JPanel();
+        averageValNamePanel.setBackground(new Color(173, 216, 230));
+        averageValNamePanel.setBounds(433, 124, 157, 38);
+        mainPanel.add(averageValNamePanel);
 
-        JLabel average = new JLabel("Average:");
-        average.setFont(new Font("Courier New", Font.PLAIN, 16));
-        panel_3.add(average);
+        JLabel averageValNameLabel = new JLabel("Average:");
+        averageValNameLabel.setFont(new Font("Courier New", Font.PLAIN, 16));
+        averageValNamePanel.add(averageValNameLabel);
 
-        JPanel panel_4 = new JPanel();
-        panel_4.setBackground(new Color(255, 182, 193));
-        panel_4.setBounds(433, 178, 157, 38);
-        panel.add(panel_4);
+        JPanel channelNamePanel = new JPanel();
+        channelNamePanel.setBackground(new Color(255, 182, 193));
+        channelNamePanel.setBounds(433, 178, 157, 38);
+        mainPanel.add(channelNamePanel);
 
-        JLabel channels = new JLabel("Channels:");
-        channels.setFont(new Font("Courier New", Font.PLAIN, 16));
-        panel_4.add(channels);
+        JLabel channelNameLabel = new JLabel("Channels:");
+        channelNameLabel.setFont(new Font("Courier New", Font.PLAIN, 16));
+        channelNamePanel.add(channelNameLabel);
 
-        JPanel panel_5 = new JPanel();
-        panel_5.setBackground(new Color(173, 216, 230));
-        panel_5.setBounds(433, 232, 157, 41);
-        panel.add(panel_5);
+        JPanel freqNamePanel = new JPanel();
+        freqNamePanel.setBackground(new Color(173, 216, 230));
+        freqNamePanel.setBounds(433, 232, 157, 41);
+        mainPanel.add(freqNamePanel);
 
-        JLabel frequencyHZ = new JLabel("Frequency(Hz):");
-        frequencyHZ.setFont(new Font("Courier New", Font.PLAIN, 16));
-        panel_5.add(frequencyHZ);
+        JLabel freqNameLabel = new JLabel("Frequency(Hz):");
+        freqNameLabel.setFont(new Font("Courier New", Font.PLAIN, 16));
+        freqNamePanel.add(freqNameLabel);
 
-        panel_6 = new JLabel();
-        panel_6.setBackground(new Color(255, 182, 193));
-        panel_6.setOpaque(true);
-        panel_6.setBounds(618, 16, 103, 38);
-        panel.add(panel_6);
+        highestValLabel = new JLabel();
+        highestValLabel.setBackground(new Color(255, 182, 193));
+        highestValLabel.setOpaque(true);
+        highestValLabel.setBounds(618, 16, 103, 38);
+        mainPanel.add(highestValLabel);
 
         JLabel lblA = new JLabel("");
         lblA.setFont(new Font("Courier New", Font.PLAIN, 16));
-        panel_6.add(lblA);
+        highestValLabel.add(lblA);
 
-        panel_7 = new JLabel();
-        panel_7.setBackground(new Color(173, 216, 230));
-        panel_7.setOpaque(true);
-        panel_7.setBounds(618, 70, 103, 38);
-        panel.add(panel_7);
+        lowestValLabel = new JLabel();
+        lowestValLabel.setBackground(new Color(173, 216, 230));
+        lowestValLabel.setOpaque(true);
+        ClientWindow.lowestValLabel.setBounds(618, 70, 103, 38);
+        mainPanel.add(ClientWindow.lowestValLabel);
 
         JLabel label_1 = new JLabel("");
         label_1.setFont(new Font("Courier New", Font.PLAIN, 16));
-        panel_7.add(label_1);
+        ClientWindow.lowestValLabel.add(label_1);
 
-        panel_8 = new JLabel();
-        panel_8.setBackground(new Color(255, 182, 193));
-        panel_8.setOpaque(true);
-        panel_8.setBounds(618, 124, 103, 38);
-        panel.add(panel_8);
+        averageValLabel = new JLabel();
+        averageValLabel.setBackground(new Color(255, 182, 193));
+        averageValLabel.setOpaque(true);
+        averageValLabel.setBounds(618, 124, 103, 38);
+        mainPanel.add(averageValLabel);
 
         JLabel label_2 = new JLabel("");
         label_2.setFont(new Font("Courier New", Font.PLAIN, 16));
-        panel_8.add(label_2);
+        averageValLabel.add(label_2);
 
         String[] noChannels = {"1", "2", "3", "4", "5"};
         JComboBox comboBox = new JComboBox(noChannels);
@@ -150,22 +150,22 @@ public class ClientWindow extends JFrame implements ActionListener {
         comboBox.setFont(new Font("Courier New", Font.PLAIN, 16));
         comboBox.setBackground(new Color(173, 216, 230));
         comboBox.setBounds(618, 190, 103, 26);
-        panel.add(comboBox);
+        mainPanel.add(comboBox);
 
-        panel_9 = new JLabel();
-        panel_9.setBackground(new Color(255, 182, 193));
-        panel_9.setOpaque(true);
-        panel_9.setBounds(618, 232, 103, 41);
-        panel.add(panel_9);
+        freqValLabel = new JLabel();
+        freqValLabel.setBackground(new Color(255, 182, 193));
+        freqValLabel.setOpaque(true);
+        freqValLabel.setBounds(618, 232, 103, 41);
+        mainPanel.add(freqValLabel);
 
         JLabel label_3 = new JLabel("");
         label_3.setFont(new Font("Courier New", Font.PLAIN, 16));
-        panel_9.add(label_3);
+        freqValLabel.add(label_3);
 
-        panel_10 = new PlotDiagramPanel();
-        panel_10.setBackground(new Color(255, 182, 193));
-        panel_10.setBounds(10, 16, 406, 257);
-        panel.add(panel_10);
+        diagramPanel = new PlotDiagramPanel();
+        diagramPanel.setBackground(new Color(255, 182, 193));
+        diagramPanel.setBounds(10, 16, 406, 257);
+        mainPanel.add(diagramPanel);
 
         JEditorPane consolePanel = new JEditorPane();
         console.setFont(new Font("Courier New", Font.PLAIN, 18));
@@ -227,10 +227,10 @@ public class ClientWindow extends JFrame implements ActionListener {
 
 
     private static void update(List<Integer> list, int h, int l, int av) {
-        panel_10.addData(list);
-        panel_6.setText(Integer.toString(h));
-        panel_7.setText(Integer.toString(l));
-        panel_8.setText(Integer.toString(av));
+        diagramPanel.addData(list);
+        highestValLabel.setText(Integer.toString(h));
+        lowestValLabel.setText(Integer.toString(l));
+        averageValLabel.setText(Integer.toString(av));
     }
 
     public static void startClient() {
