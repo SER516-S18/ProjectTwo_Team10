@@ -1,5 +1,5 @@
 
-import java.awt.EventQueue;
+import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -7,19 +7,10 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import java.awt.Color;
-import java.awt.SystemColor;
-import java.awt.Panel;
-import java.awt.Font;
+import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
-import javax.swing.JTextPane;
 
 public class ClientWindow extends JFrame implements ActionListener {
 
@@ -29,12 +20,11 @@ public class ClientWindow extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
     private JFrame frame;
     static JTextPane console = new JTextPane();
-    private static JLabel highestValue;
-    private static JLabel lowestValue;
-    private static JLabel average;
-    private static JLabel channels;
-    private static JLabel frequencyHZ;
     private static PlotDiagramPanel panel_10;
+    private static JLabel panel_6;
+    private static JLabel panel_7;
+    private static JLabel panel_8;
+    private static JLabel panel_9;
 
     /**
      * Launch the application.
@@ -83,7 +73,7 @@ public class ClientWindow extends JFrame implements ActionListener {
         panel_1.setBounds(433, 16, 157, 38);
         panel.add(panel_1);
 
-        highestValue = new JLabel("Highest Value:");
+        JLabel highestValue = new JLabel("Highest Value:");
         highestValue.setFont(new Font("Courier New", Font.PLAIN, 16));
         panel_1.add(highestValue);
 
@@ -92,7 +82,7 @@ public class ClientWindow extends JFrame implements ActionListener {
         panel_2.setBounds(433, 70, 157, 38);
         panel.add(panel_2);
 
-        lowestValue = new JLabel("Lowest Value:");
+        JLabel lowestValue = new JLabel("Lowest Value:");
         lowestValue.setFont(new Font("Courier New", Font.PLAIN, 16));
         panel_2.add(lowestValue);
 
@@ -101,7 +91,7 @@ public class ClientWindow extends JFrame implements ActionListener {
         panel_3.setBounds(433, 124, 157, 38);
         panel.add(panel_3);
 
-        average = new JLabel("Average:");
+        JLabel average = new JLabel("Average:");
         average.setFont(new Font("Courier New", Font.PLAIN, 16));
         panel_3.add(average);
 
@@ -110,7 +100,7 @@ public class ClientWindow extends JFrame implements ActionListener {
         panel_4.setBounds(433, 178, 157, 38);
         panel.add(panel_4);
 
-        channels = new JLabel("Channels:");
+        JLabel channels = new JLabel("Channels:");
         channels.setFont(new Font("Courier New", Font.PLAIN, 16));
         panel_4.add(channels);
 
@@ -119,12 +109,13 @@ public class ClientWindow extends JFrame implements ActionListener {
         panel_5.setBounds(433, 232, 157, 41);
         panel.add(panel_5);
 
-        frequencyHZ = new JLabel("Frequency(Hz):");
+        JLabel frequencyHZ = new JLabel("Frequency(Hz):");
         frequencyHZ.setFont(new Font("Courier New", Font.PLAIN, 16));
         panel_5.add(frequencyHZ);
 
-        JPanel panel_6 = new JPanel();
+        panel_6 = new JLabel();
         panel_6.setBackground(new Color(255, 182, 193));
+        panel_6.setOpaque(true);
         panel_6.setBounds(618, 16, 103, 38);
         panel.add(panel_6);
 
@@ -132,8 +123,9 @@ public class ClientWindow extends JFrame implements ActionListener {
         lblA.setFont(new Font("Courier New", Font.PLAIN, 16));
         panel_6.add(lblA);
 
-        JPanel panel_7 = new JPanel();
+        panel_7 = new JLabel();
         panel_7.setBackground(new Color(173, 216, 230));
+        panel_7.setOpaque(true);
         panel_7.setBounds(618, 70, 103, 38);
         panel.add(panel_7);
 
@@ -141,8 +133,9 @@ public class ClientWindow extends JFrame implements ActionListener {
         label_1.setFont(new Font("Courier New", Font.PLAIN, 16));
         panel_7.add(label_1);
 
-        JPanel panel_8 = new JPanel();
+        panel_8 = new JLabel();
         panel_8.setBackground(new Color(255, 182, 193));
+        panel_8.setOpaque(true);
         panel_8.setBounds(618, 124, 103, 38);
         panel.add(panel_8);
 
@@ -159,8 +152,9 @@ public class ClientWindow extends JFrame implements ActionListener {
         comboBox.setBounds(618, 190, 103, 26);
         panel.add(comboBox);
 
-        JPanel panel_9 = new JPanel();
+        panel_9 = new JLabel();
         panel_9.setBackground(new Color(255, 182, 193));
+        panel_9.setOpaque(true);
         panel_9.setBounds(618, 232, 103, 41);
         panel.add(panel_9);
 
@@ -177,33 +171,31 @@ public class ClientWindow extends JFrame implements ActionListener {
         console.setFont(new Font("Courier New", Font.PLAIN, 18));
         JScrollPane ScrollBar = new JScrollPane(console);
         JTextPane lblConsole = new JTextPane();
-        
+
         consolePanel.setFont(new Font("Courier New", Font.PLAIN, 18));
-		consolePanel.setBackground(new Color(211, 211, 211));
-		consolePanel.setBounds(15, 388,748,90);
+        consolePanel.setBackground(new Color(211, 211, 211));
+        consolePanel.setBounds(15, 388,748,90);
         consolePanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		consolePanel.setLayout(new BoxLayout(consolePanel, BoxLayout.PAGE_AXIS));
+        consolePanel.setLayout(new BoxLayout(consolePanel, BoxLayout.PAGE_AXIS));
         consolePanel.setVisible(true);
-        
+
         lblConsole.setFont(new Font("Courier New", Font.PLAIN, 18));
-		lblConsole.setText("Console: ");
-		lblConsole.setOpaque(false);
+        lblConsole.setText("Console: ");
+        lblConsole.setOpaque(false);
         lblConsole.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
-        
+
         ScrollBar.setOpaque(false);
         ScrollBar.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
-		ScrollBar.setPreferredSize(new Dimension(600, 118));
-		
+        ScrollBar.setPreferredSize(new Dimension(600, 118));
+
         consolePanel.add(lblConsole);
-		consolePanel.add(ScrollBar);
-        
-		console.setEditable(false);
+        consolePanel.add(ScrollBar);
+        console.setEditable(false);
         console.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
-		console.setBackground(new Color(211, 211, 211));
+        console.setBackground(new Color(211, 211, 211));
         console.setLayout(new BoxLayout(console, BoxLayout.Y_AXIS));
-		console.setEditable(false);
-		console.setBackground(new Color(211, 211, 211));
-        
+        console.setEditable(false);
+        console.setBackground(new Color(211, 211, 211));
         frame.getContentPane().add(consolePanel);
     }
 
@@ -234,10 +226,12 @@ public class ClientWindow extends JFrame implements ActionListener {
     }
 
 
-    private static void update(List<Integer> list) {
+    private static void update(List<Integer> list, int h, int l, int av) {
         panel_10.addData(list);
+        panel_6.setText(Integer.toString(h));
+        panel_7.setText(Integer.toString(l));
+        panel_8.setText(Integer.toString(av));
     }
-
 
     public static void startClient() {
         (new Thread() {
@@ -249,11 +243,9 @@ public class ClientWindow extends JFrame implements ActionListener {
                     ArrayList<Integer> arrayList = new ArrayList<Integer>();
                     BufferedWriter out = new BufferedWriter(
                             new OutputStreamWriter(socket.getOutputStream()));
-                    
 
                     while (true) {
-                        ObjectInputStream objectInput = new ObjectInputStream(socket.getInputStream());
-                        Object object = objectInput.readObject();
+                        Object object = (new ObjectInputStream(socket.getInputStream())).readObject();
                         arrayList =  (ArrayList<Integer>) object;
                         String s = getNoOfChannels().toString();
                         out.write(s);
@@ -262,7 +254,12 @@ public class ClientWindow extends JFrame implements ActionListener {
                         out.flush();
                         shrinkTo(arrayList, Integer.parseInt(s));
                         System.out.println(arrayList);
-                        update(arrayList);
+                        ClientHighestAndLowestVal.readList(arrayList);
+                        ClientAverageValue.calculateAverage(arrayList);
+                        int highest = ClientHighestAndLowestVal.getHighestVal();
+                        int lowest = ClientHighestAndLowestVal.getLowestVal();
+                        int avg = ClientAverageValue.getAverage();
+                        update(arrayList, highest, lowest, avg);
                         arrayList.clear();
                     }
                 } catch (IOException e) {
