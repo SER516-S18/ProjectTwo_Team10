@@ -201,51 +201,53 @@ public class ClientWindow extends JFrame implements ActionListener {
         JComboBox cb = (JComboBox)e.getSource();
         Integer no = Integer.parseInt((String)cb.getSelectedItem());
         setNoOfChannels(no);
-    }
+    	}
+	
+	public static void shrinkTo(ArrayList<Integer> list, int channel) {
+	int size = list.size();
+	if (channel >= size) return;
+	for (int i = channel; i < size; i++) {
+	list.remove(list.size() - 1);
+	}
+	
 
 
-    public static void startClient() {
-        (new Thread() {
-            @Override
-            public void run() {
-                try {
-                   Socket socket = new Socket("localhost", 60010);
-                   BufferedWriter out = new BufferedWriter(
-                                            new OutputStreamWriter(socket.getOutputStream()));
-                   BufferedReader in = new BufferedReader(
-                                            new InputStreamReader(socket.getInputStream())); 
-                   while (true) {
-                       String s = getNoOfChannels().toString();
-                       String Server_Input;
-                       ArrayList <String> String_List;
-                       ArrayList<Integer> al = new ArrayList<Integer>();
-                       out.write(s);
-                       out.newLine();
-                       out.flush();
-                       if(flag == 1)
-                       
-                    	   {
-                    	   Server_Input = in.readLine();
-                    	   String[] values = Server_Input.split(",");
-                    	   for(int i = 0; i < values.length; i++)
-                    	   {
-                    		   al.add(Integer.parseInt(values[i]));
-                    	   }
-                           }
-                       
-                       Thread.sleep(200);
-                       if(flag == 0)
-                    		   socket.close();
-                    		   
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
+	public static void startClient() {
+		(new Thread() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void run() {
+				try {
+					Socket socket = new Socket("localhost", 9090);
+					ArrayList<Integer> arrayList = new ArrayList<Integer>();
+					BufferedWriter out = new BufferedWriter(
+							new OutputStreamWriter(socket.getOutputStream()));
+					ObjectInputStream objectInput = new ObjectInputStream(socket.getInputStream());
+
+					while (true) {
+						Object object = objectInput.readObject();
+						arrayList =  (ArrayList<Integer>) object;
+						String s = getNoOfChannels().toString();
+						out.write(s);
+						System.out.println(s);
+						out.newLine();
+						out.flush();
+						shrinkTo(arrayList, Integer.parseInt(s));
+						System.out.println(arrayList);
+						arrayList.clear();
+						Thread.sleep(1000);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}).start();
+	}
 
     synchronized static Integer getNoOfChannels() {
         return noOfChannels;
