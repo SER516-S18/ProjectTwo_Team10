@@ -225,7 +225,9 @@ public class ClientWindow extends JFrame implements ActionListener {
         }
     }
 
-
+     /**
+      * Update the date received.
+      */
     private static void update(List<Integer> list, int h, int l, int av) {
         diagramPanel.addData(list);
         highestValLabel.setText(Integer.toString(h));
