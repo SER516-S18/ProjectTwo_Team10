@@ -28,7 +28,7 @@ public class ClientWindow extends JFrame implements ActionListener {
      */
     private static final long serialVersionUID = 1L;
     private JFrame frame;
-    static JTextPane txtpnConsole = new JTextPane();
+    static JTextPane console = new JTextPane();
     private static JLabel highestValue;
     private static JLabel lowestValue;
     private static JLabel average;
@@ -44,6 +44,7 @@ public class ClientWindow extends JFrame implements ActionListener {
             public void run() {
                 try {
                     ClientWindow clientwindow = new ClientWindow();
+                    ClientConsole.setMessage("Client Start");
                     clientwindow.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -172,16 +173,42 @@ public class ClientWindow extends JFrame implements ActionListener {
         panel_10.setBounds(10, 16, 406, 257);
         panel.add(panel_10);
 
-        //txtpnConsole.setFont(new Font("Courier New", Font.PLAIN, 16));
-        txtpnConsole.setBackground(SystemColor.controlHighlight);
-        txtpnConsole.setText("Console:");
-        txtpnConsole.setBounds(15, 388, 748, 90);
-        txtpnConsole.setEditable(false);
-        frame.getContentPane().add(txtpnConsole);
+        JEditorPane consolePanel = new JEditorPane();
+        console.setFont(new Font("Courier New", Font.PLAIN, 18));
+        JScrollPane ScrollBar = new JScrollPane(console);
+        JTextPane lblConsole = new JTextPane();
+        
+        consolePanel.setFont(new Font("Courier New", Font.PLAIN, 18));
+		consolePanel.setBackground(new Color(211, 211, 211));
+		consolePanel.setBounds(15, 388,748,90);
+        consolePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		consolePanel.setLayout(new BoxLayout(consolePanel, BoxLayout.PAGE_AXIS));
+        consolePanel.setVisible(true);
+        
+        lblConsole.setFont(new Font("Courier New", Font.PLAIN, 18));
+		lblConsole.setText("Console: ");
+		lblConsole.setOpaque(false);
+        lblConsole.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
+        
+        ScrollBar.setOpaque(false);
+        ScrollBar.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
+		ScrollBar.setPreferredSize(new Dimension(600, 118));
+		
+        consolePanel.add(lblConsole);
+		consolePanel.add(ScrollBar);
+        
+		console.setEditable(false);
+        console.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
+		console.setBackground(new Color(211, 211, 211));
+        console.setLayout(new BoxLayout(console, BoxLayout.Y_AXIS));
+		console.setEditable(false);
+		console.setBackground(new Color(211, 211, 211));
+        
+        frame.getContentPane().add(consolePanel);
     }
 
     public static JTextPane getTextPane() {
-        return txtpnConsole;
+        return console;
     }
 
     /**
