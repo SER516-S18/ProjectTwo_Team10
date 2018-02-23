@@ -1,5 +1,3 @@
-package lab2_022218_1936;
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
