@@ -6,7 +6,7 @@ import javax.swing.*;
  * @version 1.0
  */
 
-public class ReadFrequency{
+public class ClientFrequency{
 
     final int defaultFrequency = 1;
 

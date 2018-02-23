@@ -7,12 +7,12 @@ public class ServerHLValues {
 	}
 
 	public int getHighestVal() {
-		highestVal = Integer.parseInt(ServerGUI.textPane.getText());
+//		highestVal = Integer.parseInt(ServerGUI.textPane.getText());
 		return highestVal;
 	}
 
 	public int getLowestVal() {
-		lowestVal = Integer.parseInt(ServerGUI.textPane_1.getText());
+//		lowestVal = Integer.parseInt(ServerGUI.textPane_1.getText());
 		return lowestVal;
 	}
 

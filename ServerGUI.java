@@ -4,17 +4,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import java.awt.BorderLayout;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -28,7 +23,6 @@ import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -36,32 +30,29 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
+ * Server Class: Implement server functionality
+ * 
  * @SER516 ProjecTwo_Team10
- * @author Kanchan Wakchaure
+ * @author Kanchan Wakchaure and Vikram Wathodkar
  * @Version 1.0 Server GUI to start/stop the server and enter the value ranges
  */
 
 public class ServerGUI implements ActionListener {
 
+	/* Server properties */
 	private JFrame frmServer;
 	private static ServerSocket serverSocket;
-	private static Socket clientSocket;
-	private static int flag = 0;
+	private static int serverState = 0;
 	static JTextPane txtHighValue = new JTextPane();
 	static JTextPane txtLowValue = new JTextPane();
 	static JTextPane consolePane = new JTextPane();
 	static JTextPane indicatorPane = new JTextPane();
 	static JTextField txtFrequency = new JTextField();
-	static Indicator ledIndicator = new Indicator(flag);
+	static Indicator ledIndicator = new Indicator(serverState);
 	static Socket socket;
 
-	// Create the application
+	/* Server constructor */
 	public ServerGUI() {
-		initialize();
-	}
-
-	// Initialize the contents of the frame.
-	private void initialize() {
 
 		frmServer = new JFrame();
 		frmServer.setTitle("Server");
@@ -188,30 +179,24 @@ public class ServerGUI implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (flag == 0) {
-			flag = 1;
-			ledIndicator.update(flag);
-			System.out.println("Started");
-
-			Thread serverThread = new Thread(new ServerThread());
-			serverThread.start();
-		} else if (flag == 1) {
-			flag = 0;
-			ledIndicator.update(flag);
-
-			System.out.println("Stopped");
-			//serverSocket.close();
+		if (serverState == 0) {
+			serverState = 1;
+			ledIndicator.update(serverState);
+		} else if (serverState == 1) {
+			serverState = 0;
+			ledIndicator.update(serverState);
 		}
-
 	}
 
-	// Launch the application
+	/* Main function to launch the application */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					ServerGUI window = new ServerGUI();
 					window.frmServer.setVisible(true);
+					Thread serverThread = new Thread(new ServerThread());
+					serverThread.start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -220,9 +205,7 @@ public class ServerGUI implements ActionListener {
 	}
 
 	static class ServerThread implements Runnable {
-
-//		private BufferedReader input;
-
+		// private BufferedReader input;
 		public void run() {
 			try {
 				serverSocket = new ServerSocket(9090);
@@ -248,33 +231,25 @@ public class ServerGUI implements ActionListener {
 							}
 						}
 					}.start();
-					
+
 				}
 
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 			int frequency, low, high;
 			String channel = null;
-//			ObjectOutputStream objectOutput = null;
-
+			// ObjectOutputStream objectOutput = null;
 			try {
-				
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				
-
 				channel = in.readLine();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			//high = Integer.parseInt(ServerGUI.txtHighValue.getText());
-			//low = Integer.parseInt(ServerGUI.txtLowValue.getText());
-			//frequency = Integer.parseInt(ServerGUI.txtFrequency.getText());
-			
-			
-
+			// high = Integer.parseInt(ServerGUI.txtHighValue.getText());
+			// low = Integer.parseInt(ServerGUI.txtLowValue.getText());
+			// frequency = Integer.parseInt(ServerGUI.txtFrequency.getText());
 		}
 	}
 

@@ -16,10 +16,10 @@ public class ServerStartStopButton {
      */
     public static void start() {
         try {
-            serverSocket = new Socket("localhost", 1516);
+//            serverSocket = new Socket("localhost", 1516);
             System.out.println("Connected succeffsully");
         } catch (Exception e) {
-            e.printStackTrace("Start Now");
+//            e.printStackTrace("Start Now");
         }
     }
     
@@ -27,11 +27,11 @@ public class ServerStartStopButton {
       * Press the button and stop working.
       */
     public static void stop() {
-        try {
-            serverSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace("Stop Now");
-        }
-    }
+  //      try {
+ //           serverSocket.close();
+ //       } catch (IOException e) {
+ //           e.printStackTrace("Stop Now");
+ //       }
+   }
     
 }
