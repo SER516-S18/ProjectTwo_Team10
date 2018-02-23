@@ -173,6 +173,10 @@ public class ClientWindow extends JFrame implements ActionListener {
 
 		startClient();
 	}
+	
+	public static JTextPane getTextPane() {
+-		return txtpnConsole;
+-     }
 
 	/**
 	 * Action listner for drop down menu
