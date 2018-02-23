@@ -56,11 +56,11 @@ public class ClientWindow extends JFrame implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JButton btnStartstop = new JButton("Start/Stop");
-		btnStartstop.setBackground(new Color(255, 182, 193));
-		btnStartstop.setFont(new Font("Courier New", Font.PLAIN, 16));
-		btnStartstop.setBounds(604, 16, 159, 29);
-		frame.getContentPane().add(btnStartstop);
+		JButton startStop = new JButton("Start/Stop");
+		startStop.setBackground(new Color(255, 182, 193));
+		startStop.setFont(new Font("Courier New", Font.PLAIN, 16));
+		startStop.setBounds(604, 16, 159, 29);
+		frame.getContentPane().add(startStop);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(220, 220, 220));
@@ -73,45 +73,45 @@ public class ClientWindow extends JFrame implements ActionListener {
 		panel_1.setBounds(433, 16, 157, 38);
 		panel.add(panel_1);
 
-		JLabel lblHighestValue = new JLabel("Highest Value:");
-		lblHighestValue.setFont(new Font("Courier New", Font.PLAIN, 16));
-		panel_1.add(lblHighestValue);
+		JLabel highestValue = new JLabel("Highest Value:");
+		highestValue.setFont(new Font("Courier New", Font.PLAIN, 16));
+		panel_1.add(highestValue);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 182, 193));
 		panel_2.setBounds(433, 70, 157, 38);
 		panel.add(panel_2);
 
-		JLabel lblLowestValue = new JLabel("Lowest Value:");
-		lblLowestValue.setFont(new Font("Courier New", Font.PLAIN, 16));
-		panel_2.add(lblLowestValue);
+		JLabel lowestValue = new JLabel("Lowest Value:");
+		lowestValue.setFont(new Font("Courier New", Font.PLAIN, 16));
+		panel_2.add(lowestValue);
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(173, 216, 230));
 		panel_3.setBounds(433, 124, 157, 38);
 		panel.add(panel_3);
 
-		JLabel lblNewLabel = new JLabel("Average:");
-		lblNewLabel.setFont(new Font("Courier New", Font.PLAIN, 16));
-		panel_3.add(lblNewLabel);
+		JLabel average = new JLabel("Average:");
+		average.setFont(new Font("Courier New", Font.PLAIN, 16));
+		panel_3.add(average);
 
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(255, 182, 193));
 		panel_4.setBounds(433, 178, 157, 38);
 		panel.add(panel_4);
 
-		JLabel lblChannels = new JLabel("Channels:");
-		lblChannels.setFont(new Font("Courier New", Font.PLAIN, 16));
-		panel_4.add(lblChannels);
+		JLabel channels = new JLabel("Channels:");
+		channels.setFont(new Font("Courier New", Font.PLAIN, 16));
+		panel_4.add(channels);
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(173, 216, 230));
 		panel_5.setBounds(433, 232, 157, 41);
 		panel.add(panel_5);
 
-		JLabel lblFrequencyhz = new JLabel("Frequency(Hz):");
-		lblFrequencyhz.setFont(new Font("Courier New", Font.PLAIN, 16));
-		panel_5.add(lblFrequencyhz);
+		JLabel frequencyHZ = new JLabel("Frequency(Hz):");
+		frequencyHZ.setFont(new Font("Courier New", Font.PLAIN, 16));
+		panel_5.add(frequencyHZ);
 
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(new Color(255, 182, 193));
