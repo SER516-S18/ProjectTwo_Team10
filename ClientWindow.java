@@ -63,7 +63,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		frame.getContentPane().add(btnStartstop);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(173, 216, 230));
+		panel.setBackground(new Color(220, 220, 220));
 		panel.setBounds(15, 58, 748, 300);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
