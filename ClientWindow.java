@@ -63,13 +63,13 @@ public class ClientWindow extends JFrame implements ActionListener {
 		frame.getContentPane().add(btnStartstop);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(SystemColor.controlHighlight);
+		panel.setBackground(new Color(173, 216, 230));
 		panel.setBounds(15, 58, 748, 300);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(SystemColor.activeCaption);
+		panel_1.setBackground(new Color(173, 216, 230));
 		panel_1.setBounds(433, 16, 157, 38);
 		panel.add(panel_1);
 
@@ -87,7 +87,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		panel_2.add(lblLowestValue);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(SystemColor.activeCaption);
+		panel_3.setBackground(new Color(173, 216, 230));
 		panel_3.setBounds(433, 124, 157, 38);
 		panel.add(panel_3);
 
@@ -105,7 +105,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		panel_4.add(lblChannels);
 
 		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(SystemColor.activeCaption);
+		panel_5.setBackground(new Color(173, 216, 230));
 		panel_5.setBounds(433, 232, 157, 41);
 		panel.add(panel_5);
 
@@ -123,7 +123,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		panel_6.add(lblA);
 
 		JPanel panel_7 = new JPanel();
-		panel_7.setBackground(SystemColor.activeCaption);
+		panel_7.setBackground(new Color(173, 216, 230));
 		panel_7.setBounds(618, 70, 103, 38);
 		panel.add(panel_7);
 
@@ -145,7 +145,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		setNoOfChannels(1);
 		comboBox.addActionListener(this);
 		comboBox.setFont(new Font("Courier New", Font.PLAIN, 16));
-		comboBox.setBackground(SystemColor.activeCaption);
+		comboBox.setBackground(new Color(173, 216, 230));
 		comboBox.setBounds(618, 190, 103, 26);
 		panel.add(comboBox);
 
