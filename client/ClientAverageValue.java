@@ -28,7 +28,7 @@ public class ClientAverageValue {
         average = (int)(sum/avgValues.size());
     }
     /**
-     * @return the averageVal
+     * @return the average value
      */
     public static int getAverage(){
         return average;
