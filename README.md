@@ -3,18 +3,15 @@
 ## Signal Generator (Lab 2)
 
 ## How to Run Project
-
-Run Server
-
-    java -jar executable/server.jar
- 
-Run Client
-
-    java -jar executable/client.jar
+1. Open Server.jar => java -jar executable/server.jar
+2. Enter values in server GUI for high, low and frquency value and click Start
+3. Open Client.jar => java -jar executable/client.jar
+4. Select no. of channels and enter the frequency in client GUI
+5. Click start/stop button in client
 
 ## How to Compile Project
 
-### Mac/Linux
+For Mac/Linux:
 
 Make build.sh executable
 
@@ -24,9 +21,9 @@ Compile
 
     ./build.sh
     
-### Windows
+For Windows
 
- ???
+path /build.sh
 
 ### Team Members
 
