@@ -21,7 +21,9 @@ public class Indicator extends JPanel{
     private static final long serialVersionUID = 1L;
     private Color displayColor, status, backgroundColor;
 
-    //Initialize the Light on the panel.
+    /* Initialize the Light on the panel.
+    * @param error If error Blink red
+    */
     Indicator(int error) {
         displayColor = getBackground();
         backgroundColor = getBackground();
@@ -55,7 +57,9 @@ public class Indicator extends JPanel{
         this.paint(this.getGraphics());
     }
 
-  //Sets the color based on the error code
+  /*Sets the color based on the error code
+   *@param status Based on Status,Light blinks
+   */
     public void update(int status) {
         if (status == 0) {
             this.status=  new Color(0,153,0);
