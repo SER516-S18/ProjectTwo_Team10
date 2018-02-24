@@ -58,9 +58,9 @@ public class Indicator extends JPanel{
   //Sets the color based on the error code
     public void update(int status) {
         if (status == 0) {
-            this.status=  Color.GREEN;
+            this.status=  new Color(0,153,0);
         } else {
-            this.status = Color.RED;
+            this.status = new Color(255,51,51);
         }
     }
 }
