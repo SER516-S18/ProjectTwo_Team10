@@ -61,7 +61,7 @@ public class Indicator extends JPanel{
    *@param status Based on Status,Light blinks
    */
     public void update(int status) {
-        if (status == 0) {
+        if (status == 1) {
             this.status=  new Color(0,153,0);
         } else {
             this.status = new Color(255,51,51);
