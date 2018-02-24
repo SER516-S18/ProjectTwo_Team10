@@ -1,11 +1,14 @@
 package server;
 
-import java.awt.EventQueue;
+iimport java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -222,16 +225,19 @@ public class ServerGUI implements ActionListener {
                 try {
                 	serverSocket = new ServerSocket(9090);
 					socket = serverSocket.accept();
-					GenerateRandomNumbers grn = new GenerateRandomNumbers(1000, 20, 3);
+					int high = Integer.parseInt(ServerGUI.txtHighValue.getText());
+					int  low = Integer.parseInt(ServerGUI.txtLowValue.getText());
+					int frequency = Integer.parseInt(ServerGUI.txtFrequency.getText());
+					GenerateRandomNumbers grn = new GenerateRandomNumbers(high, low,5);
 					while (true) {
 						while (getServerState() == 0)
-							Thread.sleep(1000);
+							Thread.sleep(1000 / frequency);
 						ArrayList<Integer> arrayList = grn.RandomNumberFunction();
 						System.out.print(arrayList);
 						ObjectOutputStream objectOutput = new ObjectOutputStream(socket.getOutputStream());
 						objectOutput.writeObject(arrayList);
 						System.out.println(arrayList);
-						Thread.sleep(1000 / 3);
+						Thread.sleep(1000 / frequency);
 						arrayList.clear();
 					}
                 } catch (Exception e) {
@@ -240,24 +246,5 @@ public class ServerGUI implements ActionListener {
 			}
 		}).start();
 	}
-/*
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			int frequency, low, high;
-			String channel = null;
-			// ObjectOutputStream objectOutput = null;
-			try {
-				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				channel = in.readLine();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			// high = Integer.parseInt(ServerGUI.txtHighValue.getText());
-			// low = Integer.parseInt(ServerGUI.txtLowValue.getText());
-			// frequency = Integer.parseInt(ServerGUI.txtFrequency.getText());
-		}
-	}
-*/
+
 }
