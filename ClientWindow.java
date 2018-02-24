@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class ClientWindow extends JFrame implements ActionListener {
     private static JLabel highestValLabel;
     private static JLabel lowestValLabel;
     private static JLabel averageValLabel;
-    private static JLabel freqValLabel;
+    private JTextField textFieldFrequency;
 
     /**
      * Launch the application.
@@ -152,15 +151,12 @@ public class ClientWindow extends JFrame implements ActionListener {
         comboBox.setBounds(618, 190, 103, 26);
         mainPanel.add(comboBox);
 
-        freqValLabel = new JLabel();
-        freqValLabel.setBackground(new Color(255, 182, 193));
-        freqValLabel.setOpaque(true);
-        freqValLabel.setBounds(618, 232, 103, 41);
-        mainPanel.add(freqValLabel);
-
-        JLabel label_3 = new JLabel("");
-        label_3.setFont(new Font("Courier New", Font.PLAIN, 16));
-        freqValLabel.add(label_3);
+        textFieldFrequency = new JTextField();
+		textFieldFrequency.setFont(new Font("Courier New", Font.PLAIN, 20));
+		textFieldFrequency.setBackground(new Color(255, 182, 193));
+		textFieldFrequency.setBounds(618, 232, 103, 41);
+		mainPanel.add(textFieldFrequency);
+		textFieldFrequency.setColumns(10);
 
         diagramPanel = new PlotDiagramPanel();
         diagramPanel.setBackground(new Color(255, 182, 193));
@@ -237,7 +233,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 
     public static void startClient() {
         (new Thread() {
-            @SuppressWarnings("unchecked")
+            @SuppressWarnings({ "unchecked", "resource" })
             @Override
             public void run() {
                 try {
