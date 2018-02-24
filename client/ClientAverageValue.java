@@ -12,10 +12,10 @@ public class ClientAverageValue {
     private static int average = 0;
     private static int sum = 0;
     private static int num = 0;
+    static ArrayList <Integer> avgValues = new ArrayList<Integer>();
     /**
      * make the average a singleton 
      */
-    static ArrayList <Integer> avgValues = new ArrayList<Integer>();
     private ClientAverageValue(){}
     /**
      * @param valueList is value list in the client that contains all values
