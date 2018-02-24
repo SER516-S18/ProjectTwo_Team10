@@ -146,6 +146,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		averageValLabel.add(label_2);
 
 		String[] noChannels = {"1", "2", "3", "4", "5"};
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox comboBox = new JComboBox(noChannels);
 		setNoOfChannels(1);
 		comboBox.addActionListener(this);
@@ -209,9 +210,11 @@ public class ClientWindow extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (getClientState() == 0) {
 			setClientState(1);
+			@SuppressWarnings("rawtypes")
 			JComboBox cb = (JComboBox)e.getSource();
 			Integer no = Integer.parseInt((String)cb.getSelectedItem());
 			setNoOfChannels(no);
+			
 		} else if (getClientState() == 1) {
 			setClientState(0);
 		}
@@ -257,7 +260,8 @@ public class ClientWindow extends JFrame implements ActionListener {
 							new OutputStreamWriter(socket.getOutputStream()));
 
 					while (true) {
-						Object object = (new ObjectInputStream(socket.getInputStream())).readObject();
+						Object object = (new ObjectInputStream
+								 (socket.getInputStream())).readObject();
 						arrayList =  (ArrayList<Integer>) object;
 						String s = getNoOfChannels().toString();
 						out.write(s);
@@ -269,7 +273,6 @@ public class ClientWindow extends JFrame implements ActionListener {
 							try {
 								Thread.sleep(1000);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						ClientHighestAndLowestVal.readList(arrayList);
@@ -283,7 +286,6 @@ public class ClientWindow extends JFrame implements ActionListener {
 				} catch (IOException e) {
 					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
