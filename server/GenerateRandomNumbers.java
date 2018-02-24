@@ -4,25 +4,30 @@ package server;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * @SER516 ProjecTwo_Team10
+ * @author Prasanth Venugopal
+ * @Version 1.0
+ * Generation of random values on server with given range
+ */
+
 public class GenerateRandomNumbers {
-	/**
-	 * @SER516 ProjecTwo_Team10
-	 * @author Prasanth Venugopal
-	 * @Version 1.0
-	 * User Story #3: Generation of Random values 
-	 */
-	int highestNumberPossible;
-	int lowestNumberPossible;
-	int Channel;
-	Random random = new Random();
+	int highestNumberPossible,
+        lowestNumberPossible,
+        channel;
+	
+	//Parameterized constructor
 	public GenerateRandomNumbers(int high, int low,  int channel){	
-		 this.highestNumberPossible = high;
-		 this.lowestNumberPossible = low;
-		 this.Channel = channel;
+		this.highestNumberPossible = high;
+		this.lowestNumberPossible = low;
+		this.channel = channel;
 	}
-	public  ArrayList<Integer> RandomNumberFunction() {
-		    	ArrayList<Integer> al = new ArrayList<Integer>();
-        		for(int i = 0; i < Channel;i++){
+	
+	//Method to generate random values
+	public ArrayList<Integer> RandomNumberFunction() {
+		Random random = new Random();
+		ArrayList<Integer> al = new ArrayList<Integer>();
+        		for(int i = 0; i < channel;i++){
         			int randomNumber = random.nextInt(highestNumberPossible - lowestNumberPossible) + lowestNumberPossible;
         			al.add(randomNumber);
         		}   
