@@ -32,7 +32,7 @@ Compile
 
 * Bhavana Venkatasubramanian - 120
 * Prasanth Venugopal - 121
-* 
+* Zitong Wei - 126
 * Kanchan Wakchaure - 123
 * Vikram Wathodkar - 125
 * Divya Yadamreddi - 128
