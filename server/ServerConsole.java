@@ -5,10 +5,10 @@ import javax.swing.JEditorPane;
 import javax.swing.text.html.HTMLDocument;
 
 /**
-* SER 516 - Lab 2
-* @author Hari Siddarth V Kesavan
-* @version 0.4
-* ServerConsole is the class to print messages and errors on console in server
+ * @SER516 ProjecTwo_Team10
+ * @author Hari Siddarth V Kesavan
+ * @version 1.0
+ * To print messages and errors on console in server GUI
 */
 
 public class ServerConsole {
@@ -18,8 +18,11 @@ public class ServerConsole {
 		try {
 			console.setContentType( "text/html" );
 			HTMLDocument doc=(HTMLDocument) console.getDocument();
-            		doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),"[ " + new Date() +  " ] " + "<span style=\"color:red\">"  + error + "</span> <br>");
-		} catch (Exception e) {
+            doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),
+               "[ " + new Date() +  " ] " + "<span style=\"color:red\">"  
+                + error + "</span> <br>");
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -28,8 +31,11 @@ public class ServerConsole {
 		try {
 			console.setContentType( "text/html" );
 			HTMLDocument doc=(HTMLDocument) console.getDocument();
-			doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()), "[ " +  new Date() + " ] " + "<span style=\"color:black\">"  + message + "</span> <br>");
-		} catch (Exception e) {
+			doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()), 
+			  "[ " +  new Date() + " ] " + "<span style=\"color:black\">" 
+			   + message + "</span> <br>");
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
