@@ -1,4 +1,5 @@
 package client;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,19 +10,22 @@ import java.util.List;
  */
 public class ClientAverageValue {
     private static int average = 0;
+    private static int sum = 0;
+    private static int num = 0;
     /**
      * make the average a singleton 
      */
+    static ArrayList <Integer> avgValues = new ArrayList<Integer>();
     private ClientAverageValue(){}
     /**
      * @param valueList is value list in the client that contains all values
      */
     public static void calculateAverage(List<Integer> valueList){
-        long sum = 0;
         for(int v : valueList){
+            avgValues.add(v);
             sum += v;
         }
-        average = (int)(sum/valueList.size());
+        average = (int)(sum/avgValues.size());
     }
     /**
      * @return the averageVal
