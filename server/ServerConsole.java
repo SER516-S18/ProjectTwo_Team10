@@ -163,13 +163,11 @@ public class ServerGUI implements ActionListener {
 		lblConsole.setFont(new Font("Courier New", Font.PLAIN, 18));
 		lblConsole.setText(" Console: ");
 		lblConsole.setOpaque(false);
-		lblConsole.setBorder(BorderFactory.createLineBorder(
-								          		new Color(211, 211, 211)));
+		lblConsole.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
 
 		JScrollPane consoleScroll = new JScrollPane(consolePane);
 		consoleScroll.setOpaque(false);
-		consoleScroll.setBorder(BorderFactory.createLineBorder(	
-												new Color(211, 211, 211)));
+		consoleScroll.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
 		consoleScroll.setPreferredSize(new Dimension(600, 118));
 
 		consolePanel.add(lblConsole);
@@ -177,8 +175,7 @@ public class ServerGUI implements ActionListener {
 
 		frmServer.getContentPane().add(consolePanel);
 
-		consolePane.setBorder(BorderFactory.createLineBorder(
-												new Color(211, 211, 211)));
+		consolePane.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
 		consolePane.setEditable(false);
 		consolePane.setBackground(new Color(211, 211, 211));
 		consolePane.setLayout(new BoxLayout(consolePane, BoxLayout.Y_AXIS));
