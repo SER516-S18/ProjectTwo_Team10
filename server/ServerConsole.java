@@ -234,10 +234,8 @@ public class ServerGUI implements ActionListener {
 					socket = serverSocket.accept();
 					high = Integer.parseInt(ServerGUI.txtHighValue.getText());
 					low = Integer.parseInt(ServerGUI.txtLowValue.getText());
-					frequency = Integer.parseInt(
-									ServerGUI.txtFrequency.getText());
-					GenerateRandomNumbers grn = 
-									new GenerateRandomNumbers(high, low,5);
+					frequency = Integer.parseInt(ServerGUI.txtFrequency.getText());
+					GenerateRandomNumbers grn = new GenerateRandomNumbers(high, low,5);
 					while (true) {
 						while (getServerState() == 0)
 							Thread.sleep(1000 / frequency);
