@@ -30,7 +30,7 @@ Compile
 
 ### Team Members
 
-* Harisiddarth V K - 118
+* Hari Siddarth V K - 118
 * Bhavana Venkatasubramanian - 120
 * Prasanth Venugopal - 121
 * Shubham Vyas - 122
