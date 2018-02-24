@@ -21,7 +21,6 @@ import javax.swing.SwingUtilities;
  * Author: Lei Zhang,
  * PlotDiagramPanel is a class to draw plot diagram in a panel
  * Each line of plot is in different color
- * Currently support no more than 5 lines of plot
  */
 @SuppressWarnings("serial")
 public class PlotDiagramPanel extends JPanel{
