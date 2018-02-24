@@ -180,15 +180,23 @@ public class ServerGUI implements ActionListener {
        
 	/* Start and stop Server */ 
 	public void actionPerformed(ActionEvent e) {
-		if (serverState == 0) {
-			serverState = 1;
-			ledIndicator.update(serverState);
-		} else if (serverState == 1) {
-			serverState = 0;
-			ledIndicator.update(serverState);
+		if (getServerState() == 0) {
+			setServerState(1);
+			ledIndicator.update(getServerState());
+		} else if (getServerState() == 1) {
+			setServerState(0);
+			ledIndicator.update(getServerState());
 		}
 	}
 
+	synchronized public static int getServerState() {
+		return serverState;
+	}
+	
+	synchronized public static void setServerState(int state) {
+		serverState = state;
+	}
+	
 	/* Main function to launch the application */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -196,8 +204,7 @@ public class ServerGUI implements ActionListener {
 				try {
 					ServerGUI window = new ServerGUI();
 					window.frmServer.setVisible(true);
-					Thread serverThread = new Thread(new ServerThread());
-					serverThread.start();
+					startServerThread();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -205,36 +212,36 @@ public class ServerGUI implements ActionListener {
 		});
 	}
 
-	static class ServerThread implements Runnable {
-		// private BufferedReader input;
-		public void run() {
-			try {
-				serverSocket = new ServerSocket(9090);
-				while (true) {
+	/**
+	 * This function will start server thread
+	 * which will communicate with the client
+	 */
+	public static void startServerThread() {
+		(new Thread() {
+            @Override
+            public void run() {
+                try {
+                	serverSocket = new ServerSocket(9090);
 					socket = serverSocket.accept();
-					// client request handling logic
-					System.out.println("Port 9090 is working");
 					GenerateRandomNumbers grn = new GenerateRandomNumbers(1000, 20, 3);
-					new Thread() {
-						public void run() {
-							while (true) {
-								ArrayList<Integer> arrayList = grn.RandomNumberFunction();
-								System.out.print(arrayList);
-								try {
-									ObjectOutputStream objectOutput = new ObjectOutputStream(socket.getOutputStream());
-									objectOutput.writeObject(arrayList);
-									System.out.println(arrayList);
-									Thread.sleep(1000 / 3);
-									arrayList.clear();
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						}
-					}.start();
-
+					while (true) {
+						while (getServerState() == 0)
+							Thread.sleep(1000);
+						ArrayList<Integer> arrayList = grn.RandomNumberFunction();
+						System.out.print(arrayList);
+						ObjectOutputStream objectOutput = new ObjectOutputStream(socket.getOutputStream());
+						objectOutput.writeObject(arrayList);
+						System.out.println(arrayList);
+						Thread.sleep(1000 / 3);
+						arrayList.clear();
+					}
+                } catch (Exception e) {
+                	e.printStackTrace();
 				}
-
+			}
+		}).start();
+	}
+/*
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -253,5 +260,5 @@ public class ServerGUI implements ActionListener {
 			// frequency = Integer.parseInt(ServerGUI.txtFrequency.getText());
 		}
 	}
-
+*/
 }
