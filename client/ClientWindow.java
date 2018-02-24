@@ -265,7 +265,6 @@ public class ClientWindow extends JFrame implements ActionListener {
 						arrayList =  (ArrayList<Integer>) object;
 						String s = getNoOfChannels().toString();
 						out.write(s);
-						System.out.println(s);
 						out.newLine();
 						out.flush();
 						shrinkTo(arrayList, Integer.parseInt(s));
