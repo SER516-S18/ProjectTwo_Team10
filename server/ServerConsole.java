@@ -1,3 +1,5 @@
+package server;
+
 import java.util.Date;
 import javax.swing.JEditorPane;
 import javax.swing.text.html.HTMLDocument;
