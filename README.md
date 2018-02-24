@@ -6,11 +6,11 @@
 
 Run Server
 
-    java -jar server.jar
+    java -jar executable/server.jar
  
 Run Client
 
-    java -jar client.jar
+    java -jar executable/client.jar
 
 ## How to Compile Project
 
