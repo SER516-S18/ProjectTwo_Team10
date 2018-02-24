@@ -1,7 +1,7 @@
 package client;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -11,11 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+
 
 /**
  * Author: Lei Zhang,
@@ -26,7 +23,10 @@ import javax.swing.SwingUtilities;
 public class PlotDiagramPanel extends JPanel{
 	private List<List<Integer>> values;
 	private int max_score, min_score;
-	private int width, height, border_gap, y_hatch_center;
+	@SuppressWarnings("unused")
+	private int width;
+	@SuppressWarnings("unused")
+	private int height, border_gap, y_hatch_center;
 	private static final int GRAPH_POINT_WIDTH = 8;
 	private static final Color GRAPH_POINT_COLOR = new Color(150, 50, 50, 180);
 	private static final Stroke GRAPH_STROKE = new BasicStroke(3f);
