@@ -40,3 +40,4 @@ Compile
 * Ruihao Zhou - 131
 * Zachary Wang - 124
 * Binbin Yan - 129
+* Lei Zhang - 130
