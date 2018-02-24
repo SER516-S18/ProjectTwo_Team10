@@ -11,7 +11,6 @@ import java.util.List;
 public class ClientAverageValue {
     private static int average = 0;
     private static int sum = 0;
-    private static int num = 0;
     static ArrayList <Integer> avgValues = new ArrayList<Integer>();
     /**
      * make the average a singleton 
@@ -25,7 +24,7 @@ public class ClientAverageValue {
             avgValues.add(v);
             sum += v;
         }
-        average = (int)(sum/avgValues.size());
+        average = sum/avgValues.size();
     }
     /**
      * @return the average value
