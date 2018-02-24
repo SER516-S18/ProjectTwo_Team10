@@ -213,7 +213,7 @@ public class ServerGUI implements ActionListener {
 		serverState = state;
 	}
 	
-	// Main function to launch the application
+	// Main function to launch server application
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
