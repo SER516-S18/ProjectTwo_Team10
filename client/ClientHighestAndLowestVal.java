@@ -14,7 +14,7 @@ public class ClientHighestAndLowestVal {
 
     static {
         highestVal = 0;
-        lowestVal = 0;
+        lowestVal = 1000000;
     }
 
     /**
