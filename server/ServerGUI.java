@@ -246,7 +246,7 @@ public class ServerGUI implements ActionListener {
 									new GenerateRandomNumbers(high, low,5);
 					while (true) {
 						while (getServerState() == 0)
-							Thread.sleep(1000 / frequency);
+							Thread.sleep(1000);
 						ArrayList<Integer> arrayList = grn.RandomNumberFunction();
 						ObjectOutputStream objectOutput = new 
 								ObjectOutputStream(socket.getOutputStream());
