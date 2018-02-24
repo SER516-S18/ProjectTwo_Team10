@@ -30,5 +30,10 @@ Compile
 
 ### Team Members
 
+* Bhavana Venkatasubramanian - 120
+* Prashanth Venugopal - 121
+* 
 * Vikram Wathodkar - 125
+* Divya Yadamreddi - 128
 * Ruihao Zhou - 131
+* 
