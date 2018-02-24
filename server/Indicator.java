@@ -7,14 +7,15 @@ import javax.swing.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/*
- * User Stroy#5
- *     Author								Version
- * Divya Yadamreddi							1.0
- * 
- * This class is an indicator on the server side that shows that the server is working.
- * The lights blinks in green if the server is working and blinks in red if the server is not working.
+/**
+ * @SER516 ProjecTwo_Team10
+ * @author Divya Yadamreddi	
+ * @version	1.0
+ * This class is an indicator on the server side that shows that the server
+ * is working.The lights blinks in green if the server is working and blinks
+ * in red if the server is not working.
  */
+
 public class Indicator extends JPanel{
 
     private static final long serialVersionUID = 1L;
