@@ -272,7 +272,6 @@ public class ClientWindow extends JFrame implements ActionListener {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-						System.out.println(arrayList);
 						ClientHighestAndLowestVal.readList(arrayList);
 						ClientAverageValue.calculateAverage(arrayList);
 						int highest = ClientHighestAndLowestVal.getHighestVal();
