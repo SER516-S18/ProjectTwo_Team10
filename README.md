@@ -30,14 +30,19 @@ Compile
 
 ### Team Members
 
+* Harisiddarth V K - 118
 * Bhavana Venkatasubramanian - 120
 * Prasanth Venugopal - 121
+* Shubham Vyas - 122
+* Kanchan Wakchaure - 123
+* Zachary Wang - 124
+* Vikram Wathodkar - 125
 * Zitong Wei - 126
 * Huichuan Wu - 127
-* Kanchan Wakchaure - 123
-* Vikram Wathodkar - 125
 * Divya Yadamreddi - 128
-* Ruihao Zhou - 131
-* Zachary Wang - 124
 * Binbin Yan - 129
 * Lei Zhang - 130
+* Ruihao Zhou - 131
+
+
+
