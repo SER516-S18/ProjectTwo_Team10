@@ -219,8 +219,10 @@ public class ServerGUI implements ActionListener {
 					ServerGUI window = new ServerGUI();
 					window.frmServer.setVisible(true);
 					startServerThread();
+					ServerConsole.setMessage("Server running");
 				} catch (Exception e) {
 					e.printStackTrace();
+					ServerConsol.setErrorMessage("Server start failed");
 				}
 			}
 		});
