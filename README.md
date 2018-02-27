@@ -23,7 +23,11 @@ Compile
     
 For Windows
 
-path /build.sh
+    step 1: change the cd to the directory to working directory
+    step 2: run the following commands
+    
+    java -jar server.jar
+    java -jar client.jar
 
 ### Team Members
 
