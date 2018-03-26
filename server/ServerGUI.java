@@ -222,7 +222,7 @@ public class ServerGUI implements ActionListener {
 					ServerConsole.setMessage("Server running");
 				} catch (Exception e) {
 					e.printStackTrace();
-					ServerConsol.setErrorMessage("Server start failed");
+					ServerConsole.setErrorMessage("Server start failed");
 				}
 			}
 		});
