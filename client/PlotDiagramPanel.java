@@ -59,9 +59,9 @@ public class PlotDiagramPanel extends JPanel{
 		}else{
 			for (int i=0;i<values.size();i++){
 				max_score = 
-						Math.max(max_score, Collections.max(values.get(i)))+1;
+						Math.max(max_score, Collections.max(values.get(i))+1);
 				min_score = 
-						Math.min(min_score, Collections.min(values.get(i)))-1;
+						Math.min(min_score, Collections.min(values.get(i))-1);
 			}
 		}
 		y_hatch_center = (max_score-min_score)/2;
@@ -84,8 +84,8 @@ public class PlotDiagramPanel extends JPanel{
 		}
 		for (int i=0;i<list.size();i++){
 			values.get(i).add(list.get(i));
-			max_score = Math.max(max_score, list.get(i))+1;
-			min_score = Math.min(min_score, list.get(i))-1;
+			max_score = Math.max(max_score, list.get(i)+1);
+			min_score = Math.min(min_score, list.get(i)-1);
 		}
 		this.repaint();
 	}
