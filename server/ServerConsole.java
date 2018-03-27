@@ -1,7 +1,7 @@
 package server;
 
 import java.util.Date;
-import javax.swing.JEditorPane;
+import javax.swing.JTextPane;
 import javax.swing.text.html.HTMLDocument;
 
 /**
@@ -11,13 +11,12 @@ import javax.swing.text.html.HTMLDocument;
  * To print messages and errors on console in server GUI
 */
 
-public class ServerConsole {
-	static JEditorPane console = ServerGUI.getTextPane();
-
-	public static void setErrorMessage(String error) {
+@SuppressWarnings("serial")
+public class ServerConsole extends JTextPane{
+	public void setErrorMessage(String error) {
 		try {
-			console.setContentType( "text/html" );
-			HTMLDocument doc=(HTMLDocument) console.getDocument();
+			this.setContentType( "text/html" );
+			HTMLDocument doc=(HTMLDocument) this.getDocument();
             doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()),
                "[ " + new Date() +  " ] " + "<span style=\"color:red\">"  
                 + error + "</span> <br>");
@@ -27,10 +26,10 @@ public class ServerConsole {
 		}
 	}
 	
-	public static void setMessage(String message) {
+	public void setMessage(String message) {
 		try {
-			console.setContentType( "text/html" );
-			HTMLDocument doc=(HTMLDocument) console.getDocument();
+			this.setContentType( "text/html" );
+			HTMLDocument doc=(HTMLDocument) this.getDocument();
 			doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()), 
 			  "[ " +  new Date() + " ] " + "<span style=\"color:black\">" 
 			   + message + "</span> <br>");

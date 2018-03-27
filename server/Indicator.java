@@ -19,15 +19,17 @@ import java.util.TimerTask;
 public class Indicator extends JPanel{
 
     private static final long serialVersionUID = 1L;
-    private Color displayColor, status, backgroundColor;
+    private Color displayColor, color, backgroundColor;
 
     /* Initialize the Light on the panel.
-    * @param error If error Blink red
+    * @param status
+    * 0 for server is stopped or an error occurs and blink red
+    * 1 for server is running and blink green
     */
-    Indicator(int error) {
+    Indicator(int status) {
         displayColor = getBackground();
         backgroundColor = getBackground();
-        update(error);
+        update(status);
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -35,7 +37,7 @@ public class Indicator extends JPanel{
             @Override
             public void run() {
                 if (hidden) {
-                    setColor(status);
+                    setColor(color);
                 } else {
                     setColor(backgroundColor);
                 }
@@ -62,9 +64,9 @@ public class Indicator extends JPanel{
    */
     public void update(int status) {
         if (status == 1) {
-            this.status=  new Color(0,153,0);
+            this.color=  new Color(0,153,0);
         } else {
-            this.status = new Color(255,51,51);
+            this.color = new Color(255,51,51);
         }
     }
 }

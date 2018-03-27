@@ -15,7 +15,8 @@ import javax.swing.JPanel;
 
 
 /**
- * Author: Lei Zhang,
+ * @author Lei Zhang
+ * @version 1.0
  * PlotDiagramPanel is a class to draw plot diagram in a panel
  * Each line of plot is in different color
  */
@@ -23,10 +24,7 @@ import javax.swing.JPanel;
 public class PlotDiagramPanel extends JPanel{
 	private List<List<Integer>> values;
 	private int max_score, min_score;
-	@SuppressWarnings("unused")
-	private int width;
-	@SuppressWarnings("unused")
-	private int height, border_gap, y_hatch_center;
+	private int border_gap, y_hatch_center;
 	private static final int GRAPH_POINT_WIDTH = 8;
 	private static final Color GRAPH_POINT_COLOR = new Color(150, 50, 50, 180);
 	private static final Stroke GRAPH_STROKE = new BasicStroke(3f);
@@ -44,8 +42,6 @@ public class PlotDiagramPanel extends JPanel{
 		max_score = 20;
 		min_score = 0;
 		y_hatch_center = (max_score-min_score)/2;
-		width = this.getSize().width;
-		height = this.getSize().height;
 	}
 	
 	/**
@@ -68,8 +64,6 @@ public class PlotDiagramPanel extends JPanel{
 						Math.min(min_score, Collections.min(values.get(i)))-1;
 			}
 		}
-		width = this.getSize().width;
-		height = this.getSize().height;
 		y_hatch_center = (max_score-min_score)/2;
 	}
 	

@@ -1,23 +1,23 @@
 package client;
 
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.swing.*;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class ClientWindow extends JFrame implements ActionListener {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	static JTextPane console = new JTextPane();
@@ -26,23 +26,16 @@ public class ClientWindow extends JFrame implements ActionListener {
 	private static JLabel lowestValLabel;
 	private static JLabel averageValLabel;
 	private JTextField textFieldFrequency;
-	private static int clientState;
-
+	private static int clientState=1;
+	private static Socket socket;
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClientWindow clientwindow = new ClientWindow();
-					ClientConsole.setMessage("Client Start");
-					clientwindow.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		ClientWindow clientwindow = new ClientWindow();
+		ClientConsole.setMessage("Client Start");
+		clientwindow.frame.setVisible(true);
 	}
 
 	/**
@@ -148,7 +141,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		String[] noChannels = {"1", "2", "3", "4", "5"};
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox comboBox = new JComboBox(noChannels);
-		setNoOfChannels(1);
+		setNoOfChannels(5);
 		comboBox.addActionListener(this);
 		comboBox.setFont(new Font("Courier New", Font.PLAIN, 16));
 		comboBox.setBackground(new Color(173, 216, 230));
@@ -248,40 +241,47 @@ public class ClientWindow extends JFrame implements ActionListener {
 		clientState = state;
 	}
 
+	
+	
 	public static void startClient() {
 		(new Thread() {
 			@SuppressWarnings({ "unchecked", "resource" })
 			@Override
 			public void run() {
+				while (true){
 				try {
-					Socket socket = new Socket("localhost", 9090);
+					socket = new Socket("localhost", 9090);
 					ArrayList<Integer> arrayList = new ArrayList<Integer>();
 					BufferedWriter out = new BufferedWriter(
 							new OutputStreamWriter(socket.getOutputStream()));
+					BufferedReader in = new BufferedReader(
+							new InputStreamReader(socket.getInputStream()));
 
-					while (true) {
-						Object object = (new ObjectInputStream
-								 (socket.getInputStream())).readObject();
-						arrayList =  (ArrayList<Integer>) object;
-						String s = getNoOfChannels().toString();
-						out.write(s);
-						System.out.println(s);
-						out.newLine();
-						out.flush();
-						shrinkTo(arrayList, Integer.parseInt(s));
-						while (getClientState() == 0)
-							try {
-								Thread.sleep(1000);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						ClientHighestAndLowestVal.readList(arrayList);
-						ClientAverageValue.calculateAverage(arrayList);
-						int highest = ClientHighestAndLowestVal.getHighestVal();
-						int lowest = ClientHighestAndLowestVal.getLowestVal();
-						int avg = ClientAverageValue.getAverage();
-						update(arrayList, highest, lowest, avg);
+
+					Object object = (new ObjectInputStream
+							 (socket.getInputStream())).readObject();
+
+					arrayList =  (ArrayList<Integer>) object;
+					ClientConsole.setMessage(arrayList.toString());
+					while (arrayList.size()>0) {
+						if (clientState==1){
+							String s = getNoOfChannels().toString();
+							out.write(s);
+							out.newLine();
+							out.flush();
+							shrinkTo(arrayList, Integer.parseInt(s));
+							ClientHighestAndLowestVal.readList(arrayList);
+							ClientAverageValue.calculateAverage(arrayList);
+							int highest = ClientHighestAndLowestVal.getHighestVal();
+							int lowest = ClientHighestAndLowestVal.getLowestVal();
+							int avg = ClientAverageValue.getAverage();
+							update(arrayList, highest, lowest, avg);
+						}
 						arrayList.clear();
+						object = (new ObjectInputStream
+								 (socket.getInputStream())).readObject();
+
+						arrayList =  (ArrayList<Integer>) object;
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -289,9 +289,21 @@ public class ClientWindow extends JFrame implements ActionListener {
 					e.printStackTrace();
 				}
 			}
+			}
 		}).start();
+		
 	}
-
+	
+	protected void finalize(){
+		try {
+			socket.close();
+			System.out.println("fuck");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	synchronized static Integer getNoOfChannels() {
 		return noOfChannels;
 	}
