@@ -13,8 +13,8 @@ public class ClientHighestAndLowestVal {
     private static int lowestVal;
 
     static {
-        highestVal = 0;
-        lowestVal = 1000000;
+        highestVal = Integer.MIN_VALUE;
+        lowestVal = Integer.MAX_VALUE;
     }
 
     /**
