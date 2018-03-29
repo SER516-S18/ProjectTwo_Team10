@@ -16,33 +16,33 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-public class ClientGUI extends JFrame {
+public class ClientGUI extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-	private JFrame frame;
-	private JTextPane console;
+	private ClientConsole console;
 	private PlotDiagramPanel diagramPanel;
 	private JLabel highestValLabel;
 	private JLabel lowestValLabel;
 	private JLabel averageValLabel;
 	private JTextField textFieldFrequency;
-	private boolean isClientStarted;
+	private int clientState = 0;
 	private Socket socket;
 	private int noOfChannels;
+	
+	private JButton startStop;
 	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		ClientGUI clientGUI = new ClientGUI();
+		ClientGUI clientwindow = new ClientGUI();
 	}
 
 	private void initUIComponents() {
-		frame = new JFrame();
-		frame.setTitle("Client");
-		frame.setBounds(100, 100, 800, 550);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		this.setTitle("Client");
+		this.setBounds(100, 100, 800, 550);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.getContentPane().setLayout(null);
 
 		diagramPanel = new PlotDiagramPanel();
 		diagramPanel.setBackground(new Color(255, 182, 193));
@@ -68,34 +68,43 @@ public class ClientGUI extends JFrame {
 		textFieldFrequency.setBackground(new Color(255, 182, 193));
 		textFieldFrequency.setBounds(618, 232, 103, 41);
 		textFieldFrequency.setColumns(10);
+	}
 
-		console = new JTextPane();
-		console.setEditable(false);
-		console.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
-		console.setBackground(new Color(211, 211, 211));
-		console.setLayout(new BoxLayout(console, BoxLayout.Y_AXIS));
-		console.setEditable(false);
-		console.setBackground(new Color(211, 211, 211));
-		console.setFont(new Font("Courier New", Font.PLAIN, 18));		
-		ClientConsole.setMessage("Client Start", console);
-
-		JButton startStop = new JButton("Start/Stop");
+	/** 
+	 * initialize the start or stop button
+	 * add action listener to button to control client start or stop
+	 */
+	public void initStartStopBTN(){
+		startStop = new JButton("Start");
 		startStop.setBackground(new Color(255, 182, 193));
 		startStop.setFont(new Font("Courier New", Font.PLAIN, 16));
 		startStop.setBounds(604, 16, 159, 29);
 		startStop.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				isClientStarted = !isClientStarted;
+			public void actionPerformed(ActionEvent e){
+				if (clientState == 0){
+					clientState = 1;
+					startStop.setText("Stop");
+					// TODO: start client
+					
+				}else{
+					clientState = 0;
+					startStop.setText("Start");
+					// TODO: stop client
+				}
 			}
 		});
-		
-		frame.getContentPane().add(startStop);
-
+		this.getContentPane().add(startStop);
+	}
+	
+	/**
+	 * initialize the right panel of client
+	 * 
+	 */
+	public void initRightPanel(){
 		JPanel mainPanel = new JPanel();
 		mainPanel.setBackground(new Color(220, 220, 220));
 		mainPanel.setBounds(15, 58, 748, 300);
-		frame.getContentPane().add(mainPanel);
+		this.getContentPane().add(mainPanel);
 		mainPanel.setLayout(null);
 
 		JPanel highestValNamePanel = new JPanel();
@@ -146,27 +155,38 @@ public class ClientGUI extends JFrame {
 		mainPanel.add(highestValLabel);
 		mainPanel.add(lowestValLabel);
 		mainPanel.add(averageValLabel);
-
+		
 		String[] noChannels = {"1", "2", "3", "4", "5"};
-		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox comboBox = new JComboBox(noChannels);
+		setNoOfChannels(5);
+		comboBox.setFont(new Font("Courier New", Font.PLAIN, 16));
+		comboBox.setBackground(new Color(173, 216, 230));
+		comboBox.setBounds(618, 190, 103, 26);
 		comboBox.addActionListener(new ActionListener(){
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cb = (JComboBox) e.getSource();
 				String curNum = (String) cb.getSelectedItem();
 				int value = Integer.valueOf(curNum);
 				setNoOfChannels(value);
+				//TODO: send channel message to server
 			}
 		});
-
-		comboBox.setFont(new Font("Courier New", Font.PLAIN, 16));
-		comboBox.setBackground(new Color(173, 216, 230));
-		comboBox.setBounds(618, 190, 103, 26);
 		mainPanel.add(comboBox);
 		mainPanel.add(textFieldFrequency);
 		mainPanel.add(diagramPanel);
-
+	}
+	
+	public void initConsole(){
+		console = new ClientConsole();
+		console.setEditable(false);
+		console.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
+		console.setBackground(new Color(211, 211, 211));
+		console.setLayout(new BoxLayout(console, BoxLayout.Y_AXIS));
+		console.setEditable(false);
+		console.setBackground(new Color(211, 211, 211));
+		console.setFont(new Font("Courier New", Font.PLAIN, 18));		
+		console.setMessage("Client Start");
+		
 		JEditorPane consolePanel = new JEditorPane();
 		JScrollPane scrollBar = new JScrollPane(console);
 		JTextPane lblConsole = new JTextPane();
@@ -190,20 +210,22 @@ public class ClientGUI extends JFrame {
 		consolePanel.add(lblConsole);
 		consolePanel.add(scrollBar);
 		
-		frame.getContentPane().add(consolePanel);
-		frame.setVisible(true);
+		this.getContentPane().add(consolePanel);
 	}
-
+	
 	/**
-	 * Create the frame.
+	 * Initialize the client frame.
 	 */
 	public ClientGUI() {
 		initUIComponents();
-		isClientStarted = false;
-		setNoOfChannels(5);
-		startClient();	
+		initStartStopBTN();
+		initRightPanel();
+		initConsole();
+		
+		this.setVisible(true);
 	}
-
+	
+	//TODO: remove this function and add check if the logic is properly
 	public void shrinkTo(ArrayList<Integer> list, int channel) {
 		int size = list.size();
 		if (channel >= size) return;
@@ -223,69 +245,63 @@ public class ClientGUI extends JFrame {
 		averageValLabel.setText(Integer.toString(av));
 	}
 
-	synchronized public boolean getClientState() {
-		return isClientStarted;
+	synchronized public int getClientState() {
+		return clientState;
 	}
 	
-	synchronized public void setClientState(boolean state) {
-		isClientStarted = state;
+	synchronized public void setClientState(int state) {
+		clientState = state;
 	}
 	
+	//TODO: remove this function after client connector finished
 	public void startClient() {
 		(new Thread() {
-			@SuppressWarnings({ "unchecked", "resource" })
 			@Override
 			public void run() {
-				try {
-					socket = new Socket("localhost", 9090);
-					ArrayList<Integer> arrayList = new ArrayList<Integer>();
-					BufferedWriter out = new BufferedWriter(
-							new OutputStreamWriter(socket.getOutputStream()));
-					BufferedReader in = new BufferedReader(
-							new InputStreamReader(socket.getInputStream()));
+				while (true) {
+					try {
+						socket = new Socket("localhost", 9090);
+						ArrayList<Integer> arrayList = new ArrayList<Integer>();
+						BufferedWriter out = new BufferedWriter(
+								new OutputStreamWriter(socket.getOutputStream()));
+						BufferedReader in = new BufferedReader(
+								new InputStreamReader(socket.getInputStream()));
 
-					Object object = (new ObjectInputStream
-							(socket.getInputStream())).readObject();
+						Object object = (new ObjectInputStream
+								(socket.getInputStream())).readObject();
 
-					arrayList = (ArrayList<Integer>) object;
-					while (arrayList.size() > 0) {
-						if (isClientStarted) {
-							String s = Integer.toString(getNoOfChannels());
-							out.write(s);
-							out.newLine();
-							out.flush();
-							shrinkTo(arrayList, Integer.parseInt(s));
-							ClientHighestAndLowestVal.readList(arrayList);
-							ClientAverageValue.calculateAverage(arrayList);
-							int highest = ClientHighestAndLowestVal.getHighestVal();
-							int lowest = ClientHighestAndLowestVal.getLowestVal();
-							int avg = ClientAverageValue.getAverage();
-							update(arrayList, highest, lowest, avg);
+						arrayList =  (ArrayList<Integer>) object;
+						console.setMessage(arrayList.toString());
+						while (arrayList.size() > 0) {
+							if (clientState == 1){
+								String s = Integer.toString(getNoOfChannels());
+								out.write(s);
+								out.newLine();
+								out.flush();
+								shrinkTo(arrayList, Integer.parseInt(s));
+								ClientHighestAndLowestVal.readList(arrayList);
+								ClientAverageValue.calculateAverage(arrayList);
+								int highest = ClientHighestAndLowestVal.getHighestVal();
+								int lowest = ClientHighestAndLowestVal.getLowestVal();
+								int avg = ClientAverageValue.getAverage();
+								update(arrayList, highest, lowest, avg);
+							}
+
+							arrayList.clear();
+							object = (new ObjectInputStream(socket.getInputStream())).readObject();
+							arrayList = (ArrayList<Integer>) object;
 						}
 
-						arrayList.clear();
-						object = (new ObjectInputStream(socket.getInputStream())).readObject();
-						arrayList = (ArrayList<Integer>) object;
+					} catch (ClassNotFoundException | IOException e) {
+						e.printStackTrace();
 					}
 
-				} catch (ClassNotFoundException | IOException e) {
-					e.printStackTrace();
 				}
-				
+
 			}
 			
 		}).start();
 		
-	}
-	
-	protected void finalize() {
-		try {
-			socket.close();
-			System.out.println("fuck");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 	}
 	
 	synchronized int getNoOfChannels() {
