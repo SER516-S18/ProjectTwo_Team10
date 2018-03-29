@@ -78,14 +78,6 @@ public class ClientGUI extends JFrame {
 		console.setBackground(new Color(211, 211, 211));
 		console.setFont(new Font("Courier New", Font.PLAIN, 18));		
 		ClientConsole.setMessage("Client Start", console);
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public ClientGUI() {
-		initUIComponents();
-		isClientStarted = false;
 
 		JButton startStop = new JButton("Start/Stop");
 		startStop.setBackground(new Color(255, 182, 193));
@@ -167,8 +159,7 @@ public class ClientGUI extends JFrame {
 				setNoOfChannels(value);
 			}
 		});
-		
-		setNoOfChannels(5);
+
 		comboBox.setFont(new Font("Courier New", Font.PLAIN, 16));
 		comboBox.setBackground(new Color(173, 216, 230));
 		comboBox.setBounds(618, 190, 103, 26);
@@ -201,6 +192,15 @@ public class ClientGUI extends JFrame {
 		
 		frame.getContentPane().add(consolePanel);
 		frame.setVisible(true);
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public ClientGUI() {
+		initUIComponents();
+		isClientStarted = false;
+		setNoOfChannels(5);
 		startClient();	
 	}
 
