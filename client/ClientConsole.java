@@ -14,7 +14,7 @@ import javax.swing.text.html.HTMLDocument;
   */
 
 public class ClientConsole {
-    private final static Logger printing = Logger.getLogger(ClientWindow.class.getName());
+    private final static Logger printing = Logger.getLogger(ClientGUI.class.getName());
 	
 	/**
       * Get srror string and display it on the console.

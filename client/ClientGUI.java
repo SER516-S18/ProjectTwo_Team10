@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-public class ClientWindow extends JFrame implements ActionListener {
+public class ClientGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -26,7 +26,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 	private JLabel lowestValLabel;
 	private JLabel averageValLabel;
 	private JTextField textFieldFrequency;
-	private int clientState = 1;
+	private boolean isClientStarted;
 	private Socket socket;
 	private int noOfChannels;
 	
@@ -34,7 +34,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		ClientWindow clientwindow = new ClientWindow();
+		ClientGUI clientGUI = new ClientGUI();
 	}
 
 	private void initUIComponents() {
@@ -83,13 +83,21 @@ public class ClientWindow extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public ClientWindow() {
+	public ClientGUI() {
 		initUIComponents();
+		isClientStarted = false;
+
 		JButton startStop = new JButton("Start/Stop");
 		startStop.setBackground(new Color(255, 182, 193));
 		startStop.setFont(new Font("Courier New", Font.PLAIN, 16));
 		startStop.setBounds(604, 16, 159, 29);
-		startStop.addActionListener(this);
+		startStop.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				isClientStarted = !isClientStarted;
+			}
+		});
+		
 		frame.getContentPane().add(startStop);
 
 		JPanel mainPanel = new JPanel();
@@ -146,24 +154,21 @@ public class ClientWindow extends JFrame implements ActionListener {
 		mainPanel.add(highestValLabel);
 		mainPanel.add(lowestValLabel);
 		mainPanel.add(averageValLabel);
-		
-		// JLabel lblA = new JLabel("");
-		// lblA.setFont(new Font("Courier New", Font.PLAIN, 16));
-		// highestValLabel.add(lblA);
-
-		// JLabel label_1 = new JLabel("");
-		// label_1.setFont(new Font("Courier New", Font.PLAIN, 16));
-		// lowestValLabel.add(label_1);
-		
-		// JLabel label_2 = new JLabel("");
-		// label_2.setFont(new Font("Courier New", Font.PLAIN, 16));
-		// averageValLabel.add(label_2);
 
 		String[] noChannels = {"1", "2", "3", "4", "5"};
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox comboBox = new JComboBox(noChannels);
+		comboBox.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cb = (JComboBox) e.getSource();
+				String curNum = (String) cb.getSelectedItem();
+				int value = Integer.valueOf(curNum);
+				setNoOfChannels(value);
+			}
+		});
+		
 		setNoOfChannels(5);
-		comboBox.addActionListener(this);
 		comboBox.setFont(new Font("Courier New", Font.PLAIN, 16));
 		comboBox.setBackground(new Color(173, 216, 230));
 		comboBox.setBounds(618, 190, 103, 26);
@@ -172,7 +177,7 @@ public class ClientWindow extends JFrame implements ActionListener {
 		mainPanel.add(diagramPanel);
 
 		JEditorPane consolePanel = new JEditorPane();
-		JScrollPane ScrollBar = new JScrollPane(console);
+		JScrollPane scrollBar = new JScrollPane(console);
 		JTextPane lblConsole = new JTextPane();
 
 		consolePanel.setFont(new Font("Courier New", Font.PLAIN, 18));
@@ -187,32 +192,16 @@ public class ClientWindow extends JFrame implements ActionListener {
 		lblConsole.setOpaque(false);
 		lblConsole.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
 
-		ScrollBar.setOpaque(false);
-		ScrollBar.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
-		ScrollBar.setPreferredSize(new Dimension(600, 118));
+		scrollBar.setOpaque(false);
+		scrollBar.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
+		scrollBar.setPreferredSize(new Dimension(600, 118));
 
 		consolePanel.add(lblConsole);
-		consolePanel.add(ScrollBar);
+		consolePanel.add(scrollBar);
 		
 		frame.getContentPane().add(consolePanel);
 		frame.setVisible(true);
-	}
-
-	/**
-	 * Action listner for drop down menu
-	 */
-	public void actionPerformed(ActionEvent e) {
-		if (getClientState() == 0) {
-			setClientState(1);
-			@SuppressWarnings("rawtypes")
-			JComboBox cb = (JComboBox) e.getSource();
-			Integer no = Integer.parseInt((String) cb.getSelectedItem());
-			setNoOfChannels(no);		
-		} else if (getClientState() == 1) {
-			setClientState(0);
-			startClient();	
-		}
-
+		startClient();	
 	}
 
 	public void shrinkTo(ArrayList<Integer> list, int channel) {
@@ -234,12 +223,12 @@ public class ClientWindow extends JFrame implements ActionListener {
 		averageValLabel.setText(Integer.toString(av));
 	}
 
-	synchronized public int getClientState() {
-		return clientState;
+	synchronized public boolean getClientState() {
+		return isClientStarted;
 	}
 	
-	synchronized public void setClientState(int state) {
-		clientState = state;
+	synchronized public void setClientState(boolean state) {
+		isClientStarted = state;
 	}
 	
 	public void startClient() {
@@ -247,46 +236,42 @@ public class ClientWindow extends JFrame implements ActionListener {
 			@SuppressWarnings({ "unchecked", "resource" })
 			@Override
 			public void run() {
-				while (true) {
-					try {
-						socket = new Socket("localhost", 9090);
-						ArrayList<Integer> arrayList = new ArrayList<Integer>();
-						BufferedWriter out = new BufferedWriter(
-								new OutputStreamWriter(socket.getOutputStream()));
-						BufferedReader in = new BufferedReader(
-								new InputStreamReader(socket.getInputStream()));
+				try {
+					socket = new Socket("localhost", 9090);
+					ArrayList<Integer> arrayList = new ArrayList<Integer>();
+					BufferedWriter out = new BufferedWriter(
+							new OutputStreamWriter(socket.getOutputStream()));
+					BufferedReader in = new BufferedReader(
+							new InputStreamReader(socket.getInputStream()));
 
-						Object object = (new ObjectInputStream
-								(socket.getInputStream())).readObject();
+					Object object = (new ObjectInputStream
+							(socket.getInputStream())).readObject();
 
-						arrayList =  (ArrayList<Integer>) object;
-						ClientConsole.setMessage(arrayList.toString(), console);
-						while (arrayList.size() > 0) {
-							if (clientState == 1){
-								String s = Integer.toString(getNoOfChannels());
-								out.write(s);
-								out.newLine();
-								out.flush();
-								shrinkTo(arrayList, Integer.parseInt(s));
-								ClientHighestAndLowestVal.readList(arrayList);
-								ClientAverageValue.calculateAverage(arrayList);
-								int highest = ClientHighestAndLowestVal.getHighestVal();
-								int lowest = ClientHighestAndLowestVal.getLowestVal();
-								int avg = ClientAverageValue.getAverage();
-								update(arrayList, highest, lowest, avg);
-							}
-
-							arrayList.clear();
-							object = (new ObjectInputStream(socket.getInputStream())).readObject();
-							arrayList = (ArrayList<Integer>) object;
+					arrayList = (ArrayList<Integer>) object;
+					while (arrayList.size() > 0) {
+						if (isClientStarted) {
+							String s = Integer.toString(getNoOfChannels());
+							out.write(s);
+							out.newLine();
+							out.flush();
+							shrinkTo(arrayList, Integer.parseInt(s));
+							ClientHighestAndLowestVal.readList(arrayList);
+							ClientAverageValue.calculateAverage(arrayList);
+							int highest = ClientHighestAndLowestVal.getHighestVal();
+							int lowest = ClientHighestAndLowestVal.getLowestVal();
+							int avg = ClientAverageValue.getAverage();
+							update(arrayList, highest, lowest, avg);
 						}
 
-					} catch (ClassNotFoundException | IOException e) {
-						e.printStackTrace();
+						arrayList.clear();
+						object = (new ObjectInputStream(socket.getInputStream())).readObject();
+						arrayList = (ArrayList<Integer>) object;
 					}
 
+				} catch (ClassNotFoundException | IOException e) {
+					e.printStackTrace();
 				}
-
+				
 			}
 			
 		}).start();
